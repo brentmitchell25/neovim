@@ -17,8 +17,13 @@ M.plugins = {
     nvim_tree = plugin_conf.nvimtree,
     nvim_cmp = plugin_conf.cmp,
   },
-
   install = userPlugins,
+}
+
+M.mappings = {
+  misc = {
+    copy_whole_file = "<leader>cf",
+  },
 }
 
 return M

@@ -43,3 +43,9 @@ map("n", "<leader>nn", ":NvimTreeFindFile<cr>")
 
 -- hop
 map("n", "<leader><leader>", ":HopChar1<cr>")
+
+-- dad-bod
+map("n", "<leader><leader>du", ":DBUIToggle<CR>")
+map("n", "<leader><leader>df", ":DBUIFindBuffer<CR>")
+map("n", "<leader><leader>dr", ":DBUIRenameBuffer<CR>")
+map("n", "<leader><leader>dl", ":DBUILastQueryInfo<CR>")

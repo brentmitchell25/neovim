@@ -90,6 +90,16 @@ M.setup_lsp = function(attach, capabilities)
         },
       }
       server:setup(opts)
+    elseif server.name == "pyright" then
+      --opts.settings = {
+      --gopls = {
+      --analyses = {
+      --unusedparams = true,
+      --},
+      --staticcheck = true,
+      --},
+      --}
+      server:setup(opts)
     elseif server.name == "rust_analyzer" then
       opts.settings = {
         ["rust-analyzer"] = {
