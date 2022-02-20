@@ -91,14 +91,6 @@ M.setup_lsp = function(attach, capabilities)
       }
       server:setup(opts)
     elseif server.name == "pyright" then
-      --opts.settings = {
-      --gopls = {
-      --analyses = {
-      --unusedparams = true,
-      --},
-      --staticcheck = true,
-      --},
-      --}
       server:setup(opts)
     elseif server.name == "rust_analyzer" then
       opts.settings = {
@@ -139,14 +131,11 @@ M.setup_lsp = function(attach, capabilities)
     on_attach = function(client, bufnr)
       set_key_mappings(bufnr)
       client.resolved_capabilities.document_formatting = false
-      vim.cmd("autocmd BufWritePre *.{rs,json,yaml,yml,ts,js,lua,go} lua vim.lsp.buf.formatting_sync()")
-      vim.cmd("autocmd BufWritePre *.ts EslintFixAll")
-      vim.cmd("autocmd BufWritePre *.ts TSLspOrganizeSync")
       -- defaults
       ts_utils.setup({
-        debug = true,
+        debug = false,
         disable_commands = false,
-        enable_import_on_completion = false,
+        enable_import_on_completion = true,
 
         -- import all
         import_all_timeout = 5000, -- ms
@@ -169,7 +158,7 @@ M.setup_lsp = function(attach, capabilities)
         inlay_hints_highlight = "Comment",
 
         -- update imports on file move
-        update_imports_on_move = false,
+        update_imports_on_move = true,
         require_confirmation_on_move = false,
         watch_dir = nil,
       })
