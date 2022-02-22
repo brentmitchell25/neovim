@@ -8,11 +8,14 @@ vim.g.mapleader = " "
 vim.api.nvim_command("set undofile")
 vim.api.nvim_command("set undodir=~/.vim/undo")
 
+vim.cmd("autocmd BufWritePre *.{rs,json,yaml,yml,ts,js,lua,go,py} lua vim.lsp.buf.formatting_sync()")
+
 -- neovim
 map("t", "<a-a>", "<esc>a")
 map("t", "<a-b>", "<esc>b")
 map("t", "<a-d>", "<esc>d")
 map("t", "<a-f>", "<esc>")
+map("n", "<leader>m", ":MarkdownPreview<CR>")
 
 -- buffers
 map("n", "<leader>.", ":bnext<CR>")

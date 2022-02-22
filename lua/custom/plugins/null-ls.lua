@@ -7,21 +7,27 @@ end
 local b = null_ls.builtins
 
 local sources = {
+  -- typescript
   b.formatting.prettierd.with({
     command = "prettierd",
     prefer_local = "node_modules/.bin",
   }),
-  null_ls.builtins.code_actions.eslint_d,
+  b.code_actions.eslint_d,
   b.diagnostics.eslint.with({
     command = "eslint_d",
     prefer_local = "node_modules/.bin",
   }),
 
+  -- python
+  b.formatting.black,
+
   -- golang
-  null_ls.builtins.formatting.gofmt,
-  null_ls.builtins.formatting.goimports,
-  null_ls.builtins.diagnostics.golangci_lint,
-  --- end golang
+  b.formatting.gofmt,
+  b.formatting.goimports,
+  b.diagnostics.golangci_lint,
+
+  -- protobuf
+  b.diagnostics.protolint,
 
   -- Lua
   b.formatting.stylua.with({
@@ -29,6 +35,7 @@ local sources = {
   }),
   b.diagnostics.luacheck.with({ extra_args = { "--global vim" } }),
 
+  -- Rust
   b.formatting.rustfmt,
 }
 

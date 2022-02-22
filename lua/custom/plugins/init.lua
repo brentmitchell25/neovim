@@ -11,6 +11,8 @@ return {
   {
     "janko/vim-test",
   },
+  { "iamcco/markdown-preview.nvim", ft = "markdown", run = "cd app && yarn install" },
+  { "nvim-telescope/telescope-fzf-native.nvim", run = "make" },
   {
     "scrooloose/nerdcommenter",
   },

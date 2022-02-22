@@ -70,9 +70,6 @@ M.setup_lsp = function(attach, capabilities)
     opts.on_attach = function(client, bufnr)
       set_key_mappings(bufnr)
       client.resolved_capabilities.document_formatting = false
-      vim.cmd("autocmd BufWritePre *.ts EslintFixAll")
-      vim.cmd("autocmd BufWritePre *.ts TSLspOrganizeSync")
-      vim.cmd("autocmd BufWritePre *.{rs,json,yaml,yml,ts,js,lua,go} lua vim.lsp.buf.formatting_sync()")
       attach(client, bufnr)
     end
 
@@ -131,6 +128,8 @@ M.setup_lsp = function(attach, capabilities)
     on_attach = function(client, bufnr)
       set_key_mappings(bufnr)
       client.resolved_capabilities.document_formatting = false
+      vim.cmd("autocmd BufWritePre *.ts EslintFixAll")
+      vim.cmd("autocmd BufWritePre *.ts TSLspOrganizeSync")
       -- defaults
       ts_utils.setup({
         debug = false,
@@ -160,7 +159,6 @@ M.setup_lsp = function(attach, capabilities)
         -- update imports on file move
         update_imports_on_move = true,
         require_confirmation_on_move = false,
-        watch_dir = nil,
       })
 
       -- required to fix code action ranges and filter diagnostics
