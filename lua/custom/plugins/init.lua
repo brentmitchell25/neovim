@@ -1,23 +1,41 @@
 return {
-  {
-    "github/copilot.vim",
-  },
-  {
-    "tpope/vim-dadbod",
-  },
-  {
-    "kristijanhusak/vim-dadbod-ui",
-  },
-  {
-    "janko/vim-test",
-  },
+  { "github/copilot.vim" },
+  { "tpope/vim-dadbod" },
+  { "kristijanhusak/vim-dadbod-ui" },
+  { "janko/vim-test" },
+  { "janko/vim-test" },
   { "iamcco/markdown-preview.nvim", ft = "markdown", run = "cd app && yarn install" },
   { "nvim-telescope/telescope-fzf-native.nvim", run = "make" },
+  { "scrooloose/nerdcommenter" },
+  { "vim-scripts/marvim" },
+  { "tpope/vim-fugitive" },
+  { "michaeljsmith/vim-indent-object" },
+  { "terryma/vim-multiple-cursors" },
+  { "tpope/vim-repeat" },
+  { "tpope/vim-surround" },
+  { "simnalamburt/vim-mundo" },
+  { "christoomey/vim-tmux-navigator" },
+  { "tpope/vim-abolish" },
+  { "jose-elias-alvarez/nvim-lsp-ts-utils" },
+  { "wellle/targets.vim" },
+  { "AndrewRadev/splitjoin.vim" },
+  { "MunifTanjim/nui.nvim" },
+  { "williamboman/nvim-lsp-installer" },
   {
-    "scrooloose/nerdcommenter",
+    "bennypowers/nvim-regexplainer",
+    config = function()
+      require("custom.plugins.regexplainer").setup()
+    end,
+    requires = {
+      "nvim-lua/plenary.nvim",
+      "MunifTanjim/nui.nvim",
+    },
   },
   {
-    "vim-scripts/marvim",
+    "monaqa/dial.nvim",
+    config = function()
+      require("custom.plugins.dial").setup()
+    end,
   },
   {
     "phaazon/hop.nvim",
@@ -28,44 +46,21 @@ return {
   {
     "folke/which-key.nvim",
     config = function()
-      require("which-key").setup({})
+      require("which-key").setup({
+        plugins = {
+          presets = {
+            operators = false,
+          },
+        },
+      })
     end,
   },
   {
-    "tpope/vim-fugitive",
-  },
-  {
-    "michaeljsmith/vim-indent-object",
-  },
-  {
-    "terryma/vim-multiple-cursors",
-  },
-  {
-    "tpope/vim-repeat",
-  },
-  {
-    "tpope/vim-surround",
-  },
-  {
-    "simnalamburt/vim-mundo",
-  },
-  {
-    "christoomey/vim-tmux-navigator",
-  },
-  {
-    "tpope/vim-abolish",
-  },
-  {
-    "jose-elias-alvarez/nvim-lsp-ts-utils",
-  },
-  {
-    "wellle/targets.vim",
-  },
-  {
-    "AndrewRadev/splitjoin.vim",
-  },
-  {
-    "williamboman/nvim-lsp-installer",
+    "mvllow/modes.nvim",
+    config = function()
+      vim.opt.cursorline = true
+      require("modes").setup()
+    end,
   },
   {
     "simrat39/rust-tools.nvim",
@@ -91,7 +86,6 @@ return {
     after = "nvim-cmp", -- Here
     requires = "hrsh7th/nvim-cmp",
     config = function()
-      print("loading")
       require("custom.plugins.cmp-tabnine").setup()
     end,
   },

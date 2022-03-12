@@ -1,4 +1,5 @@
 local map = require("core.utils").map
+local dial = require("dial.map")
 
 vim.api.nvim_set_keymap("i", "<C-L>", 'copilot#Accept("\\<CR>")', { silent = true, script = true, expr = true })
 vim.g.copilot_no_tab_map = true
@@ -16,6 +17,20 @@ map("t", "<a-b>", "<esc>b")
 map("t", "<a-d>", "<esc>d")
 map("t", "<a-f>", "<esc>")
 map("n", "<leader>m", ":MarkdownPreview<CR>")
+
+-- dial
+--map("n", "<C-a>", dial.inc_normal())
+--map("n", "<C-x>", dial.dec_normal())
+--map("v", "<C-a>", dial.inc_visual())
+--map("v", "<C-x>", dial.dec_visual())
+--map("v", "g<C-a>", dial.inc_gvisual())
+--map("v", "g<C-x>", dial.dec_gvisual())
+vim.api.nvim_set_keymap("n", "<C-a>", require("dial.map").inc_normal(), { noremap = true })
+vim.api.nvim_set_keymap("n", "<C-x>", require("dial.map").dec_normal(), { noremap = true })
+vim.api.nvim_set_keymap("v", "<C-a>", require("dial.map").inc_visual(), { noremap = true })
+vim.api.nvim_set_keymap("v", "<C-x>", require("dial.map").dec_visual(), { noremap = true })
+vim.api.nvim_set_keymap("v", "g<C-a>", require("dial.map").inc_gvisual(), { noremap = true })
+vim.api.nvim_set_keymap("v", "g<C-x>", require("dial.map").dec_gvisual(), { noremap = true })
 
 -- buffers
 map("n", "<leader>.", ":bnext<CR>")
