@@ -36,7 +36,9 @@ local sources = {
   b.diagnostics.luacheck.with({ extra_args = { "--global vim" } }),
 
   -- Rust
-  b.formatting.rustfmt,
+  b.formatting.rustfmt.with({
+    extra_args = { "--edition=2021" },
+  }),
 }
 
 local M = {}

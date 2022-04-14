@@ -63,6 +63,10 @@ return {
     end,
   },
   {
+    "rust-lang/rust.vim",
+    opt = true,
+  },
+  {
     "simrat39/rust-tools.nvim",
     opt = true,
     setup = function()
