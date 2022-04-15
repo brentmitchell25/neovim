@@ -8,7 +8,6 @@ end
 local override_req = require("core.utils").override_req
 
 local plugins = {
-   { "NvChad/extensions" },
    { "nvim-lua/plenary.nvim" },
    { "lewis6991/impatient.nvim" },
    { "nathom/filetype.nvim" },
@@ -16,6 +15,13 @@ local plugins = {
    {
       "wbthomason/packer.nvim",
       event = "VimEnter",
+   },
+
+   {
+      "NvChad/extensions",
+      config = function ()
+         vim.schedule_wrap(require("nvchad.terminal").init())
+      end
    },
 
    {
@@ -41,6 +47,7 @@ local plugins = {
 
    {
       "akinsho/bufferline.nvim",
+      branch = "main",
       disable = not plugin_settings.status.bufferline,
       after = "nvim-web-devicons",
       config = override_req("bufferline", "plugins.configs.bufferline", "setup"),
@@ -65,8 +72,9 @@ local plugins = {
 
    {
       "nvim-treesitter/nvim-treesitter",
-      event = "BufRead",
+      event = { "BufRead", "BufNewFile" },
       config = override_req("nvim_treesitter", "plugins.configs.treesitter", "setup"),
+      run = ":TSUpdate",
    },
 
    -- git stuff
@@ -125,7 +133,7 @@ local plugins = {
       "rafamadriz/friendly-snippets",
       module = "cmp_nvim_lsp",
       disable = not plugin_settings.status.cmp,
-      event = "InsertCharPre",
+      event = "InsertEnter",
    },
 
    {
@@ -184,7 +192,7 @@ local plugins = {
    {
       disable = not plugin_settings.status.alpha,
       "goolord/alpha-nvim",
-      config = override_req("alpha", "plugins.configs.alpha"),
+      config = override_req("alpha", "plugins.configs.alpha", "setup"),
    },
 
    {

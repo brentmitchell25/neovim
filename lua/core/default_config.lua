@@ -40,12 +40,34 @@ M.options = {
       update_url = "https://github.com/NvChad/NvChad",
       update_branch = "main",
    },
+   terminal = {
+      behavior = {
+         close_on_exit = true,
+      },
+      window = {
+         vsplit_ratio = 0.5,
+         split_ratio = 0.4,
+      },
+      location = {
+         horizontal = "rightbelow",
+         vertical = "rightbelow",
+         float = {
+           relative = 'editor',
+           row = 0.3,
+           col = 0.25,
+           width = 0.5,
+           height = 0.4,
+           border = "single",
+         }
+      },
+   },
 }
 
 ---- UI -----
 
 M.ui = {
    hl_override = "", -- path of your file that contains highlights
+   colors = "", -- path of your file that contains colors
    italic_comments = false,
    theme = "onedark", -- default theme
 
@@ -57,6 +79,29 @@ M.ui = {
 ---- PLUGIN OPTIONS ----
 
 M.plugins = {
+
+   -- builtin nvim plugins are disabled
+   builtins = {
+      "2html_plugin",
+      "getscript",
+      "getscriptPlugin",
+      "gzip",
+      "logipat",
+      "netrw",
+      "netrwPlugin",
+      "netrwSettings",
+      "netrwFileHandlers",
+      "matchit",
+      "tar",
+      "tarPlugin",
+      "rrhelper",
+      "spellfile_plugin",
+      "vimball",
+      "vimballPlugin",
+      "zip",
+      "zipPlugin",
+   },
+
    -- enable/disable plugins (false for disable)
    status = {
       blankline = true, -- indentline stuff
@@ -92,6 +137,7 @@ M.plugins = {
          snippet_path = {},
       },
       statusline = {
+         hide_disable = false,
          -- hide, show on specific filetypes
          hidden = {
             "help",
@@ -123,10 +169,9 @@ M.mappings = {
    misc = {
       cheatsheet = "<leader>ch",
       close_buffer = "<leader>x",
-      copy_whole_file = "<C-a>", -- copy all contents of current buffer
-      copy_to_system_clipboard = "<C-c>", -- copy selected text (visual mode) or curent line (normal)
-      line_number_toggle = "<leader>n", -- toggle line number
-      relative_line_number_toggle = "<leader>rn",
+      cp_whole_file = "<C-c>", -- copy all contents of current buffer
+      lineNR_toggle = "<leader>n", -- toggle line number
+      lineNR_rel_toggle = "<leader>rn",
       update_nvchad = "<leader>uu",
       new_buffer = "<S-t>",
       new_tab = "<C-t>b",
@@ -139,8 +184,8 @@ M.mappings = {
       backward = "<C-h>",
       end_of_line = "<C-e>",
       forward = "<C-l>",
-      next_line = "<C-k>",
-      prev_line = "<C-j>",
+      next_line = "<C-j>",
+      prev_line = "<C-k>",
       beginning_of_line = "<C-a>",
    },
 
@@ -164,10 +209,16 @@ M.mappings = {
       -- show & recover hidden terminal buffers in a telescope picker
       pick_term = "<leader>W",
 
-      -- spawn terminals
+      -- spawn a single terminal and toggle it
+      -- this just works like toggleterm kinda
       new_horizontal = "<leader>h",
       new_vertical = "<leader>v",
-      new_window = "<leader>w",
+      new_float = "<A-i>",
+
+      -- spawn new terminals
+      spawn_horizontal = "<A-h>",
+      spawn_vertical = "<A-v>",
+      spawn_window = "<leader>w",
    },
 }
 
