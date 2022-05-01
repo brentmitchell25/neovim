@@ -22,12 +22,10 @@ M.cmp = {
       local icons = require("plugins.configs.lspkind_icons")
       vim_item.kind = string.format("%s %s", icons[vim_item.kind], vim_item.kind)
 
-      vim.notify("cmp_tabnine", vim_item)
-
       vim_item.menu = ({
-        buffer = "[BUF]",
         nvim_lsp = "[LSP]",
         nvim_lua = "[Lua]",
+        buffer = "[BUF]",
         path = "[Path]",
         cmp_tabnine = "[TN]",
       })[entry.source.name]

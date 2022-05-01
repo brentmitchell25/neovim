@@ -30,11 +30,7 @@ local fg_bg = require("core.utils").fg_bg
 local bg = require("core.utils").bg
 
 -- Comments
-if ui.italic_comments then
-   fg("Comment", grey_fg .. " gui=italic")
-else
-   fg("Comment", grey_fg)
-end
+fg("Comment", grey_fg)
 
 -- Disable cursor line
 cmd "hi clear CursorLine"
@@ -65,7 +61,7 @@ fg("StatusLineNC", one_bg3 .. " gui=underline")
 
 fg("LineNr", grey)
 fg("NvimInternalError", red)
-fg("VertSplit", one_bg2)
+fg("WinSeparator", one_bg2)
 
 if ui.transparency then
    bg("Normal", "NONE")
@@ -110,7 +106,7 @@ bg("NvimTreeNormalNC", darker_black)
 fg("NvimTreeOpenedFolderName", folder_bg)
 fg("NvimTreeRootFolder", red .. " gui=underline") -- enable underline for root folder in nvim tree
 fg_bg("NvimTreeStatuslineNc", darker_black, darker_black)
-fg_bg("NvimTreeVertSplit", darker_black, darker_black)
+fg_bg("NvimTreeWinSeparator", darker_black, darker_black)
 fg_bg("NvimTreeWindowPicker", red, black2)
 
 -- Telescope
@@ -128,32 +124,13 @@ fg_bg("TelescopeResultsTitle", darker_black, darker_black)
 
 bg("TelescopeSelection", black2)
 
--- keybinds cheatsheet
-
-fg_bg("CheatsheetBorder", black, black)
-bg("CheatsheetSectionContent", black)
-fg("CheatsheetHeading", white)
-
-local section_title_colors = {
-   white,
-   blue,
-   red,
-   green,
-   yellow,
-   purple,
-   orange,
-}
-for i, color in ipairs(section_title_colors) do
-   vim.cmd("highlight CheatsheetTitle" .. i .. " guibg = " .. color .. " guifg=" .. black)
-end
-
 -- Disable some highlight in nvim tree if transparency enabled
 if ui.transparency then
    bg("NormalFloat", "NONE")
    bg("NvimTreeNormal", "NONE")
    bg("NvimTreeNormalNC", "NONE")
    bg("NvimTreeStatusLineNC", "NONE")
-   fg_bg("NvimTreeVertSplit", grey, "NONE")
+   fg_bg("NvimTreeWinSeparator", grey, "NONE")
 
    -- telescope
    bg("TelescopeBorder", "NONE")

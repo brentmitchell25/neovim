@@ -1,28 +1,31 @@
 return {
-  { "github/copilot.vim" },
-  { "tpope/vim-dadbod" },
-  { "kristijanhusak/vim-dadbod-ui" },
-  { "janko/vim-test" },
-  { "janko/vim-test" },
-  { "iamcco/markdown-preview.nvim", ft = "markdown", run = "cd app && yarn install" },
-  { "nvim-telescope/telescope-fzf-native.nvim", run = "make" },
-  { "scrooloose/nerdcommenter" },
-  { "vim-scripts/marvim" },
-  { "tpope/vim-fugitive" },
-  { "michaeljsmith/vim-indent-object" },
-  { "terryma/vim-multiple-cursors" },
-  { "tpope/vim-repeat" },
-  { "tpope/vim-surround" },
-  { "simnalamburt/vim-mundo" },
-  { "christoomey/vim-tmux-navigator" },
-  { "tpope/vim-abolish" },
-  { "jose-elias-alvarez/nvim-lsp-ts-utils" },
-  { "wellle/targets.vim" },
-  { "AndrewRadev/splitjoin.vim" },
-  { "MunifTanjim/nui.nvim" },
-  { "williamboman/nvim-lsp-installer" },
-  {
-    "bennypowers/nvim-regexplainer",
+  ["github/copilot.vim"] = {},
+  ["tpope/vim-dadbod"] = {},
+  ["kristijanhusak/vim-dadbod-ui"] = {},
+  ["janko/vim-test"] = {},
+  ["iamcco/markdown-preview.nvim"] = {
+    ft = "markdown",
+    run = "cd app && yarn install",
+  },
+  ["nvim-telescope/telescope-fzf-native.nvim"] = {
+    run = "make",
+  },
+  ["scrooloose/nerdcommenter"] = {},
+  ["vim-scripts/marvim"] = {},
+  ["tpope/vim-fugitive"] = {},
+  ["michaeljsmith/vim-indent-object"] = {},
+  ["terryma/vim-multiple-cursors"] = {},
+  ["tpope/vim-repeat"] = {},
+  ["tpope/vim-surround"] = {},
+  ["simnalamburt/vim-mundo"] = {},
+  ["christoomey/vim-tmux-navigator"] = {},
+  ["tpope/vim-abolish"] = {},
+  ["jose-elias-alvarez/nvim-lsp-ts-utils"] = {},
+  ["wellle/targets.vim"] = {},
+  ["AndrewRadev/splitjoin.vim"] = {},
+  ["MunifTanjim/nui.nvim"] = {},
+  ["williamboman/nvim-lsp-installer"] = {},
+  ["bennypowers/nvim-regexplainer"] = {
     config = function()
       require("custom.plugins.regexplainer").setup()
     end,
@@ -31,20 +34,17 @@ return {
       "MunifTanjim/nui.nvim",
     },
   },
-  {
-    "monaqa/dial.nvim",
+  ["monaqa/dial.nvim"] = {
     config = function()
       require("custom.plugins.dial").setup()
     end,
   },
-  {
-    "phaazon/hop.nvim",
+  ["phaazon/hop.nvim"] = {
     config = function()
       require("hop").setup({})
     end,
   },
-  {
-    "folke/which-key.nvim",
+  ["folke/which-key.nvim"] = {
     config = function()
       require("which-key").setup({
         plugins = {
@@ -55,37 +55,31 @@ return {
       })
     end,
   },
-  {
-    "mvllow/modes.nvim",
+  ["mvllow/modes.nvim"] = {
     config = function()
       vim.opt.cursorline = true
       require("modes").setup()
     end,
   },
-  {
-    "rust-lang/rust.vim",
+  ["rust-lang/rust.vim"] = {
     opt = true,
   },
-  {
-    "simrat39/rust-tools.nvim",
+  ["simrat39/rust-tools.nvim"] = {
     opt = true,
     setup = function()
       require("core.utils").packer_lazy_load("rust-tools.nvim")
     end,
   },
-  {
-    "mfussenegger/nvim-dap",
+  ["mfussenegger/nvim-dap"] = {
     opt = true,
   },
-  {
-    "jose-elias-alvarez/null-ls.nvim",
+  ["jose-elias-alvarez/null-ls.nvim"] = {
     after = "nvim-lspconfig",
     config = function()
       require("custom.plugins.null-ls").setup()
     end,
   },
-  {
-    "tzachar/cmp-tabnine",
+  ["tzachar/cmp-tabnine"] = {
     run = "./install.sh",
     after = "nvim-cmp", -- Here
     requires = "hrsh7th/nvim-cmp",

@@ -1,5 +1,4 @@
 local map = require("core.utils").map
-local dial = require("dial.map")
 
 vim.api.nvim_set_keymap("i", "<C-L>", 'copilot#Accept("\\<CR>")', { silent = true, script = true, expr = true })
 vim.g.copilot_no_tab_map = true

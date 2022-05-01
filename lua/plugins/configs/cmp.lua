@@ -6,7 +6,7 @@ end
 
 vim.opt.completeopt = "menuone,noselect"
 
-local default = {
+local options = {
    snippet = {
       expand = function(args)
          require("luasnip").lsp_expand(args.body)
@@ -21,9 +21,6 @@ local default = {
             nvim_lsp = "[LSP]",
             nvim_lua = "[Lua]",
             buffer = "[BUF]",
-            --TODO: move to custom configs file
-            path = "[Path]",
-            cmp_tabnine = "[TN]",
          })[entry.source.name]
 
          return vim_item
@@ -48,7 +45,10 @@ local default = {
          else
             fallback()
          end
-      end, { "i", "s" }),
+      end, {
+         "i",
+         "s",
+      }),
       ["<S-Tab>"] = cmp.mapping(function(fallback)
          if cmp.visible() then
             cmp.select_prev_item()
@@ -57,7 +57,10 @@ local default = {
          else
             fallback()
          end
-      end, { "i", "s" }),
+      end, {
+         "i",
+         "s",
+      }),
    },
    sources = {
       { name = "nvim_lsp" },
@@ -65,16 +68,10 @@ local default = {
       { name = "buffer" },
       { name = "nvim_lua" },
       { name = "path" },
-    { name = "cmp_tabnine" },
    },
 }
 
-local M = {}
-M.setup = function(override_flag)
-   if override_flag then
-      default = require("core.utils").tbl_override_req("nvim_cmp", default)
-   end
-   cmp.setup(default)
-end
+-- check for any override
+options = require("core.utils").load_override(options, "hrsh7th/nvim-cmp")
 
-return M
+cmp.setup(options)
