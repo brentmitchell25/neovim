@@ -3,15 +3,15 @@ local lsp_installer_ok, lsp_installer = pcall(require, "nvim-lsp-installer")
 local lspconfig_ok, lspconfig = pcall(require, "lspconfig")
 
 if not lsp_ts_utils_ok then
-  print("nvim-lsp-ts-utils not found")
+  print "nvim-lsp-ts-utils not found"
   return
 end
 if not lsp_installer_ok then
-  print("nvim-lsp-ts-utils not found")
+  print "nvim-lsp-ts-utils not found"
   return
 end
 if not lspconfig_ok then
-  print("lspconfig not found")
+  print "lspconfig not found"
   return
 end
 
@@ -77,6 +77,9 @@ M.setup_lsp = function(attach, capabilities)
     elseif server.name == "eslint" then
       opts.settings = {}
       server:setup(opts)
+    elseif server.name == "tailwindcss" then
+      opts.filetypes = { "heex", "html" }
+      server:setup(opts)
     elseif server.name == "gopls" then
       opts.settings = {
         gopls = {
@@ -88,6 +91,8 @@ M.setup_lsp = function(attach, capabilities)
       }
       server:setup(opts)
     elseif server.name == "pyright" then
+      server:setup(opts)
+    elseif server.name == "elixirls" then
       server:setup(opts)
     elseif server.name == "rust_analyzer" then
       opts.settings = {
@@ -110,10 +115,10 @@ M.setup_lsp = function(attach, capabilities)
       server:setup(opts)
     end
 
-    vim.cmd([[ do User LspAttachBuffers ]])
+    vim.cmd [[ do User LspAttachBuffers ]]
   end)
 
-  lspconfig.tsserver.setup({
+  lspconfig.tsserver.setup {
     -- Needed for inlayHints. Merge this table with your settings or copy
     -- it from the source if you want to add your own init_options.
     --init_options = ts_utils.init_options,
@@ -128,10 +133,10 @@ M.setup_lsp = function(attach, capabilities)
     on_attach = function(client, bufnr)
       set_key_mappings(bufnr)
       client.resolved_capabilities.document_formatting = false
-      vim.cmd("autocmd BufWritePre *.ts EslintFixAll")
-      vim.cmd("autocmd BufWritePre *.ts TSLspOrganizeSync")
+      vim.cmd "autocmd BufWritePre *.ts EslintFixAll"
+      vim.cmd "autocmd BufWritePre *.ts TSLspOrganizeSync"
       -- defaults
-      ts_utils.setup({
+      ts_utils.setup {
         debug = false,
         disable_commands = false,
         enable_import_on_completion = true,
@@ -159,12 +164,12 @@ M.setup_lsp = function(attach, capabilities)
         -- update imports on file move
         update_imports_on_move = true,
         require_confirmation_on_move = false,
-      })
+      }
 
       -- required to fix code action ranges and filter diagnostics
       ts_utils.setup_client(client)
 
-      print("TSLSP attached")
+      print "TSLSP attached"
 
       -- no default maps, so you may want to define some here
       local opts = { silent = true }
@@ -172,15 +177,15 @@ M.setup_lsp = function(attach, capabilities)
       vim.api.nvim_buf_set_keymap(bufnr, "n", "gr", ":TSLspRenameFile<CR>", opts)
       vim.api.nvim_buf_set_keymap(bufnr, "n", "gi", ":TSLspImportAll<CR>", opts)
     end,
-  })
+  }
 
-  lspconfig.sumneko_lua.setup({
+  lspconfig.sumneko_lua.setup {
     on_attach = function(client, bufnr)
       set_key_mappings(bufnr)
       client.resolved_capabilities.document_formatting = false
       vim.api.nvim_buf_set_keymap(bufnr, "n", "<space>fm", "<cmd>lua vim.lsp.buf.formatting()<CR>", {})
     end,
-  })
+  }
 
   -- the above tsserver config will remvoe the tsserver's inbuilt formatting
   -- since I use null-ls with denofmt for formatting ts/js stuff.

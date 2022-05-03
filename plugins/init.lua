@@ -25,6 +25,14 @@ return {
   ["AndrewRadev/splitjoin.vim"] = {},
   ["MunifTanjim/nui.nvim"] = {},
   ["williamboman/nvim-lsp-installer"] = {},
+  ["goolord/alpha-nvim"] = {
+    disable = false,
+  },
+  ["luukvbaal/stabilize.nvim"] = {
+    config = function()
+      require("stabilize").setup()
+    end,
+  },
   ["bennypowers/nvim-regexplainer"] = {
     config = function()
       require("custom.plugins.regexplainer").setup()
@@ -41,18 +49,18 @@ return {
   },
   ["phaazon/hop.nvim"] = {
     config = function()
-      require("hop").setup({})
+      require("hop").setup {}
     end,
   },
   ["folke/which-key.nvim"] = {
     config = function()
-      require("which-key").setup({
+      require("which-key").setup {
         plugins = {
           presets = {
             operators = false,
           },
         },
-      })
+      }
     end,
   },
   ["mvllow/modes.nvim"] = {
@@ -67,7 +75,7 @@ return {
   ["simrat39/rust-tools.nvim"] = {
     opt = true,
     setup = function()
-      require("core.utils").packer_lazy_load("rust-tools.nvim")
+      require("core.utils").packer_lazy_load "rust-tools.nvim"
     end,
   },
   ["mfussenegger/nvim-dap"] = {

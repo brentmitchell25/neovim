@@ -1,3 +1,3 @@
-require("custom.mappings")
+require "custom.mappings"
 
-require("telescope").load_extension("fzf")
+require("telescope").load_extension "fzf"
