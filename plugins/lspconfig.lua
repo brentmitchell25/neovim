@@ -17,35 +17,11 @@ end
 
 local M = {}
 
-local function set_key_mappings(bufnr)
-  -- Mappings.
-  local opts = { noremap = true, silent = true }
-  local function buf_set_keymap(...)
-    vim.api.nvim_buf_set_keymap(bufnr, ...)
-  end
-
-  -- See `:help vim.lsp.*` for documentation on any of the below functions
-  buf_set_keymap("n", "gD", "<cmd>lua vim.lsp.buf.declaration()<CR>", opts)
-  buf_set_keymap("n", "gd", "<cmd>lua vim.lsp.buf.definition()<CR>", opts)
-  buf_set_keymap("n", "K", "<cmd>lua vim.lsp.buf.hover()<CR>", opts)
-  buf_set_keymap("n", "gi", "<cmd>lua vim.lsp.buf.implementation()<CR>", opts)
-  buf_set_keymap("n", "gk", "<cmd>lua vim.lsp.buf.signature_help()<CR>", opts)
-  buf_set_keymap("n", "<space>wa", "<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>", opts)
-  buf_set_keymap("n", "<space>wr", "<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>", opts)
-  buf_set_keymap("n", "<space>wl", "<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>", opts)
-  buf_set_keymap("n", "<space>D", "<cmd>lua vim.lsp.buf.type_definition()<CR>", opts)
-  buf_set_keymap("n", "<space>rn", "<cmd>lua vim.lsp.buf.rename()<CR>", opts)
-  buf_set_keymap("n", "<space>ca", "<cmd>lua vim.lsp.buf.code_action()<CR>", opts)
-  buf_set_keymap("n", "<D-.>", "<cmd>lua vim.lsp.buf.code_action()<CR>", opts)
-  buf_set_keymap("n", "gr", "<cmd>lua vim.lsp.buf.references()<CR>", opts)
-  buf_set_keymap("n", "ge", "<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>", opts)
-  buf_set_keymap("n", "[d", "<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>", opts)
-  buf_set_keymap("n", "]d", "<cmd>lua vim.lsp.diagnostic.goto_next()<CR>", opts)
-  buf_set_keymap("n", "<space>q", "<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>", opts)
-  buf_set_keymap("n", "<space>fm", "<cmd>lua vim.lsp.buf.formatting()<CR>", opts)
-  buf_set_keymap("n", "<space>i", "<cmd>TSLspImportAll<CR>", opts)
-  buf_set_keymap("v", "<space>ca", "<cmd>lua vim.lsp.buf.range_code_action()<CR>", opts)
-end
+local opts = { noremap = true, silent = true }
+vim.api.nvim_set_keymap("n", "<space>e", "<cmd>lua vim.diagnostic.open_float()<CR>", opts)
+vim.api.nvim_set_keymap("n", "[d", "<cmd>lua vim.diagnostic.goto_prev()<CR>", opts)
+vim.api.nvim_set_keymap("n", "]d", "<cmd>lua vim.diagnostic.goto_next()<CR>", opts)
+vim.api.nvim_set_keymap("n", "<space>q", "<cmd>lua vim.diagnostic.setloclist()<CR>", opts)
 
 local function quick_fix()
   local params = {
@@ -57,66 +33,89 @@ local function quick_fix()
 end
 
 M.setup_lsp = function(attach, capabilities)
-  lsp_installer.on_server_ready(function(server)
-    local opts = {
-      on_attach = attach,
+  -- Use an on_attach function to only map the following keys
+  -- after the language server attaches to the current buffer
+  local on_attach = function(client, bufnr)
+    attach(client, bufnr)
+    -- Enable completion triggered by <c-x><c-o>
+    vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
+
+    -- Mappings.
+    -- See `:help vim.lsp.*` for documentation on any of the below functions
+    vim.api.nvim_buf_set_keymap(bufnr, "n", "gD", "<cmd>lua vim.lsp.buf.declaration()<CR>", opts)
+    vim.api.nvim_buf_set_keymap(bufnr, "n", "gd", "<cmd>lua vim.lsp.buf.definition()<CR>", opts)
+    vim.api.nvim_buf_set_keymap(bufnr, "n", "K", "<cmd>lua vim.lsp.buf.hover()<CR>", opts)
+    vim.api.nvim_buf_set_keymap(bufnr, "n", "gi", "<cmd>lua vim.lsp.buf.implementation()<CR>", opts)
+    vim.api.nvim_buf_set_keymap(bufnr, "n", "<C-k>", "<cmd>lua vim.lsp.buf.signature_help()<CR>", opts)
+    vim.api.nvim_buf_set_keymap(bufnr, "n", "<space>wa", "<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>", opts)
+    vim.api.nvim_buf_set_keymap(bufnr, "n", "<space>wr", "<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>", opts)
+    vim.api.nvim_buf_set_keymap(
+      bufnr,
+      "n",
+      "<space>wl",
+      "<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>",
+      opts
+    )
+    vim.api.nvim_buf_set_keymap(bufnr, "n", "<space>D", "<cmd>lua vim.lsp.buf.type_definition()<CR>", opts)
+    vim.api.nvim_buf_set_keymap(bufnr, "n", "<space>rn", "<cmd>lua vim.lsp.buf.rename()<CR>", opts)
+    vim.api.nvim_buf_set_keymap(bufnr, "n", "<space>ca", "<cmd>lua vim.lsp.buf.code_action()<CR>", opts)
+    vim.api.nvim_buf_set_keymap(bufnr, "n", "gr", "<cmd>lua vim.lsp.buf.references()<CR>", opts)
+    vim.api.nvim_buf_set_keymap(bufnr, "n", "<space>f", "<cmd>lua vim.lsp.buf.formatting()<CR>", opts)
+  end
+  lsp_installer.setup {}
+
+  local default_servers = { "dockerls", "eslint", "elixirls", "pyright", "jsonls", "sqlls", "bashls", "yamlls" }
+  for _, lsp in pairs(default_servers) do
+    require("lspconfig")[lsp].setup {
+      on_attach = on_attach,
       capabilities = capabilities,
-      flags = {
-        debounce_text_changes = 150,
-      },
-      settings = {},
-      commands = {},
     }
-    opts.on_attach = function(client, bufnr)
-      set_key_mappings(bufnr)
-      client.resolved_capabilities.document_formatting = false
-      attach(client, bufnr)
-    end
+  end
 
-    if server.name == "tsserver" then
-    elseif server.name == "eslint" then
-      opts.settings = {}
-      server:setup(opts)
-    elseif server.name == "tailwindcss" then
-      opts.filetypes = { "heex", "html" }
-      server:setup(opts)
-    elseif server.name == "gopls" then
-      opts.settings = {
-        gopls = {
-          analyses = {
-            unusedparams = true,
-          },
-          staticcheck = true,
+  lspconfig.tailwindcss.setup {
+    on_attach = on_attach,
+    capabilities = capabilities,
+    filetypes = { "heex", "html" },
+  }
+  lspconfig.html.setup {
+    on_attach = on_attach,
+    capabilities = capabilities,
+    filetypes = { "heex", "html" },
+  }
+  lspconfig.rust_analyzer.setup {
+    on_attach = on_attach,
+    capabilities = capabilities,
+    settings = {
+      ["rust-analyzer"] = {
+        experimental = {
+          procAttrMacros = true,
         },
-      }
-      server:setup(opts)
-    elseif server.name == "pyright" then
-      server:setup(opts)
-    elseif server.name == "elixirls" then
-      server:setup(opts)
-    elseif server.name == "rust_analyzer" then
-      opts.settings = {
-        ["rust-analyzer"] = {
-          experimental = {
-            procAttrMacros = true,
-          },
+      },
+    },
+  }
+  lspconfig.gopls.setup {
+    on_attach = on_attach,
+    capabilities = capabilities,
+    settings = {
+      gopls = {
+        analyses = {
+          unusedparams = true,
         },
-      }
-
-      server:setup(opts)
-    elseif server.name == "sumneko_lua" then
-      opts.settings = {
-        Lua = {
-          diagnostics = {
-            globals = { "vim" },
-          },
+        staticcheck = true,
+      },
+    },
+  }
+  lspconfig.sumneko_lua.setup {
+    on_attach = on_attach,
+    capabilities = capabilities,
+    settings = {
+      Lua = {
+        diagnostics = {
+          globals = { "vim" },
         },
-      }
-      server:setup(opts)
-    end
-
-    vim.cmd [[ do User LspAttachBuffers ]]
-  end)
+      },
+    },
+  }
 
   lspconfig.tsserver.setup {
     -- Needed for inlayHints. Merge this table with your settings or copy
@@ -130,8 +129,8 @@ M.setup_lsp = function(attach, capabilities)
       },
     },
     --
+    capabilities = capabilities,
     on_attach = function(client, bufnr)
-      set_key_mappings(bufnr)
       client.resolved_capabilities.document_formatting = false
       vim.cmd "autocmd BufWritePre *.ts EslintFixAll"
       vim.cmd "autocmd BufWritePre *.ts TSLspOrganizeSync"
@@ -172,18 +171,10 @@ M.setup_lsp = function(attach, capabilities)
       print "TSLSP attached"
 
       -- no default maps, so you may want to define some here
-      local opts = { silent = true }
-      vim.api.nvim_buf_set_keymap(bufnr, "n", "gs", ":TSLspOrganize<CR>", opts)
-      vim.api.nvim_buf_set_keymap(bufnr, "n", "gr", ":TSLspRenameFile<CR>", opts)
-      vim.api.nvim_buf_set_keymap(bufnr, "n", "gi", ":TSLspImportAll<CR>", opts)
-    end,
-  }
-
-  lspconfig.sumneko_lua.setup {
-    on_attach = function(client, bufnr)
-      set_key_mappings(bufnr)
-      client.resolved_capabilities.document_formatting = false
-      vim.api.nvim_buf_set_keymap(bufnr, "n", "<space>fm", "<cmd>lua vim.lsp.buf.formatting()<CR>", {})
+      local options = { silent = true }
+      vim.api.nvim_buf_set_keymap(bufnr, "n", "gs", ":TSLspOrganize<CR>", options)
+      vim.api.nvim_buf_set_keymap(bufnr, "n", "gr", ":TSLspRenameFile<CR>", options)
+      vim.api.nvim_buf_set_keymap(bufnr, "n", "gi", ":TSLspImportAll<CR>", options)
     end,
   }
 

@@ -1,15 +1,9 @@
 return {
   ["github/copilot.vim"] = {},
   ["tpope/vim-dadbod"] = {},
+  ["dstein64/vim-startuptime"] = {},
   ["kristijanhusak/vim-dadbod-ui"] = {},
   ["janko/vim-test"] = {},
-  ["iamcco/markdown-preview.nvim"] = {
-    ft = "markdown",
-    run = "cd app && yarn install",
-  },
-  ["nvim-telescope/telescope-fzf-native.nvim"] = {
-    run = "make",
-  },
   ["scrooloose/nerdcommenter"] = {},
   ["vim-scripts/marvim"] = {},
   ["tpope/vim-fugitive"] = {},
@@ -28,10 +22,25 @@ return {
   ["goolord/alpha-nvim"] = {
     disable = false,
   },
-  ["luukvbaal/stabilize.nvim"] = {
+  ["folke/trouble.nvim"] = {
     config = function()
-      require("stabilize").setup()
+      require("trouble").setup()
     end,
+    requires = {
+      "kyazdani42/nvim-web-devicons",
+    },
+  },
+  --["luukvbaal/stabilize.nvim"] = {
+  --config = function()
+  --require("stabilize").setup()
+  --end,
+  --},
+  ["iamcco/markdown-preview.nvim"] = {
+    ft = "markdown",
+    run = "cd app && yarn install",
+  },
+  ["nvim-telescope/telescope-fzf-native.nvim"] = {
+    run = "make",
   },
   ["bennypowers/nvim-regexplainer"] = {
     config = function()
