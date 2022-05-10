@@ -1,4 +1,4 @@
-local map = require("core.utils").map
+local map = nvchad.map
 
 vim.api.nvim_set_keymap("i", "<C-L>", 'copilot#Accept("\\<CR>")', { silent = true, script = true, expr = true })
 vim.g.copilot_no_tab_map = true
@@ -75,3 +75,7 @@ map("n", "<leader><leader>du", ":DBUIToggle<CR>")
 map("n", "<leader><leader>df", ":DBUIFindBuffer<CR>")
 map("n", "<leader><leader>dr", ":DBUIRenameBuffer<CR>")
 map("n", "<leader><leader>dl", ":DBUILastQueryInfo<CR>")
+
+map("v", "<leader>ca", "<cmd>lua vim.lsp.buf.range_code_action()<CR>")
+map("n", "<leader>i", "<cmd>TSLspImportAll<CR>")
+map("n", "<leader>qf", "<cmd>QuickFix<CR>")

@@ -1,6 +1,7 @@
 local lsp_ts_utils_ok, ts_utils = pcall(require, "nvim-lsp-ts-utils")
 local lsp_installer_ok, lsp_installer = pcall(require, "nvim-lsp-installer")
 local lspconfig_ok, lspconfig = pcall(require, "lspconfig")
+local quickfix = require "custom.plugins.lsp-fix-current"
 
 if not lsp_ts_utils_ok then
   print "nvim-lsp-ts-utils not found"
@@ -14,19 +15,12 @@ if not lspconfig_ok then
   print "lspconfig not found"
   return
 end
+--if not quickfix_ok then
+--print "quickfix not found"
+--return
+--end
 
 local M = {}
-
-local opts = { noremap = true, silent = true }
-
-local function quick_fix()
-  local params = {
-    command = "_typescript.applyCodeAction",
-    arguments = { data = vim.api.nvim_buf_get_name(0), kind = "quickfix", title = "QuickFix" },
-    title = "",
-  }
-  vim.lsp.buf.execute_command(params)
-end
 
 M.setup_lsp = function(attach, capabilities)
   -- Use an on_attach function to only map the following keys
@@ -37,14 +31,6 @@ M.setup_lsp = function(attach, capabilities)
     vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
   end
   lsp_installer.setup {}
-
-  local default_servers = { "dockerls", "eslint", "elixirls", "pyright", "jsonls", "sqlls", "bashls", "yamlls" }
-  for _, lsp in pairs(default_servers) do
-    require("lspconfig")[lsp].setup {
-      on_attach = on_attach,
-      capabilities = capabilities,
-    }
-  end
 
   lspconfig.tailwindcss.setup {
     on_attach = on_attach,
@@ -79,17 +65,6 @@ M.setup_lsp = function(attach, capabilities)
       },
     },
   }
-  lspconfig.sumneko_lua.setup {
-    on_attach = on_attach,
-    capabilities = capabilities,
-    settings = {
-      Lua = {
-        diagnostics = {
-          globals = { "vim" },
-        },
-      },
-    },
-  }
 
   lspconfig.tsserver.setup {
     -- Needed for inlayHints. Merge this table with your settings or copy
@@ -98,7 +73,7 @@ M.setup_lsp = function(attach, capabilities)
     init_options = ts_utils.init_options,
     commands = {
       QuickFix = {
-        quick_fix,
+        quickfix,
         description = "Quick Fix",
       },
     },
@@ -146,11 +121,19 @@ M.setup_lsp = function(attach, capabilities)
 
       -- no default maps, so you may want to define some here
       local options = { silent = true }
-      vim.api.nvim_buf_set_keymap(bufnr, "n", "gs", ":TSLspOrganize<CR>", options)
-      vim.api.nvim_buf_set_keymap(bufnr, "n", "gr", ":TSLspRenameFile<CR>", options)
+      --vim.api.nvim_buf_set_keymap(bufnr, "n", "gs", ":TSLspOrganize<CR>", options)
+      --vim.api.nvim_buf_set_keymap(bufnr, "n", "gr", ":TSLspRenameFile<CR>", options)
       vim.api.nvim_buf_set_keymap(bufnr, "n", "gi", ":TSLspImportAll<CR>", options)
     end,
   }
+
+  local default_servers = { "dockerls", "eslint", "elixirls", "pyright", "jsonls", "sqlls", "bashls", "yamlls" }
+  for _, lsp in pairs(default_servers) do
+    lspconfig[lsp].setup {
+      on_attach = on_attach,
+      capabilities = capabilities,
+    }
+  end
 
   -- the above tsserver config will remvoe the tsserver's inbuilt formatting
   -- since I use null-ls with denofmt for formatting ts/js stuff.

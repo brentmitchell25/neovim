@@ -1,7 +1,6 @@
 return {
   ["github/copilot.vim"] = {},
   ["tpope/vim-dadbod"] = {},
-  ["dstein64/vim-startuptime"] = {},
   ["kristijanhusak/vim-dadbod-ui"] = {},
   ["janko/vim-test"] = {},
   ["scrooloose/nerdcommenter"] = {},
@@ -30,11 +29,6 @@ return {
       "kyazdani42/nvim-web-devicons",
     },
   },
-  --["luukvbaal/stabilize.nvim"] = {
-  --config = function()
-  --require("stabilize").setup()
-  --end,
-  --},
   ["iamcco/markdown-preview.nvim"] = {
     ft = "markdown",
     run = "cd app && yarn install",
@@ -84,7 +78,7 @@ return {
   ["simrat39/rust-tools.nvim"] = {
     opt = true,
     setup = function()
-      require("core.utils").packer_lazy_load "rust-tools.nvim"
+      nvchad.packer_lazy_load "rust-tools.nvim"
     end,
   },
   ["mfussenegger/nvim-dap"] = {
