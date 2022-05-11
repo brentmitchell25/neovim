@@ -18,6 +18,7 @@ return {
   ["AndrewRadev/splitjoin.vim"] = {},
   ["MunifTanjim/nui.nvim"] = {},
   ["williamboman/nvim-lsp-installer"] = {},
+  ["machakann/vim-sandwich"] = {},
   ["goolord/alpha-nvim"] = {
     disable = false,
   },

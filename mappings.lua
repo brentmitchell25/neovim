@@ -8,8 +8,7 @@ vim.g.mapleader = " "
 vim.api.nvim_command "set undofile"
 vim.api.nvim_command "set undodir=~/.vim/undo"
 
-vim.cmd "autocmd BufWritePre *.{rs,json,yaml,yml,ts,js,lua,go,py} lua vim.lsp.buf.formatting_sync()"
-vim.cmd "autocmd BufWritePost *.{ex,eex,leex,heex} silent! !mix format %"
+vim.cmd "autocmd BufWritePost *.{heex} silent! !mix format %"
 
 -- neovim
 map("t", "<a-a>", "<esc>a")

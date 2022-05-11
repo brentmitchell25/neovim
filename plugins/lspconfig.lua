@@ -15,10 +15,6 @@ if not lspconfig_ok then
   print "lspconfig not found"
   return
 end
---if not quickfix_ok then
---print "quickfix not found"
---return
---end
 
 local M = {}
 
@@ -79,10 +75,9 @@ M.setup_lsp = function(attach, capabilities)
     },
     --
     capabilities = capabilities,
-    on_attach = function(client, bufnr)
+    on_attach = function(client)
       client.resolved_capabilities.document_formatting = false
       vim.cmd "autocmd BufWritePre *.ts EslintFixAll"
-      vim.cmd "autocmd BufWritePre *.ts TSLspOrganizeSync"
       -- defaults
       ts_utils.setup {
         debug = false,
@@ -118,12 +113,6 @@ M.setup_lsp = function(attach, capabilities)
       ts_utils.setup_client(client)
 
       print "TSLSP attached"
-
-      -- no default maps, so you may want to define some here
-      local options = { silent = true }
-      --vim.api.nvim_buf_set_keymap(bufnr, "n", "gs", ":TSLspOrganize<CR>", options)
-      --vim.api.nvim_buf_set_keymap(bufnr, "n", "gr", ":TSLspRenameFile<CR>", options)
-      vim.api.nvim_buf_set_keymap(bufnr, "n", "gi", ":TSLspImportAll<CR>", options)
     end,
   }
 
