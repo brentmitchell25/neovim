@@ -7,6 +7,9 @@ end
 local b = null_ls.builtins
 
 local sources = {
+  --all
+  b.code_actions.refactoring,
+
   -- typescript
   b.formatting.prettierd.with {
     command = "prettierd",
@@ -22,8 +25,8 @@ local sources = {
   b.formatting.black,
 
   -- golang
-  b.formatting.gofmt,
   b.formatting.goimports,
+  b.formatting.gofmt,
   b.diagnostics.golangci_lint,
 
   -- protobuf

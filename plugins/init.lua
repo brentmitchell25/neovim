@@ -18,7 +18,12 @@ return {
   ["AndrewRadev/splitjoin.vim"] = {},
   ["MunifTanjim/nui.nvim"] = {},
   ["williamboman/nvim-lsp-installer"] = {},
-  ["machakann/vim-sandwich"] = {},
+  ["ThePrimeagen/refactoring.nvim"] = {
+    requires = {
+      { "nvim-lua/plenary.nvim" },
+      { "nvim-treesitter/nvim-treesitter" },
+    },
+  },
   ["goolord/alpha-nvim"] = {
     disable = false,
   },
@@ -54,17 +59,6 @@ return {
   ["phaazon/hop.nvim"] = {
     config = function()
       require("hop").setup {}
-    end,
-  },
-  ["folke/which-key.nvim"] = {
-    config = function()
-      require("which-key").setup {
-        plugins = {
-          presets = {
-            operators = false,
-          },
-        },
-      }
     end,
   },
   ["mvllow/modes.nvim"] = {
