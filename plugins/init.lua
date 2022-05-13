@@ -16,8 +16,15 @@ return {
   ["jose-elias-alvarez/nvim-lsp-ts-utils"] = {},
   ["wellle/targets.vim"] = {},
   ["AndrewRadev/splitjoin.vim"] = {},
+  ["vim-scripts/ReplaceWithRegister"] = {},
   ["MunifTanjim/nui.nvim"] = {},
   ["williamboman/nvim-lsp-installer"] = {},
+  ["kana/vim-textobj-user"] = {},
+  ["andyl/vim-textobj-elixir"] = {
+    requires = {
+      ["kana/vim-textobj-user"] = {},
+    },
+  },
   ["ThePrimeagen/refactoring.nvim"] = {
     requires = {
       { "nvim-lua/plenary.nvim" },
