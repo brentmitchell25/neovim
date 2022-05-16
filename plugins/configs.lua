@@ -6,6 +6,9 @@ M.nvimtree = {
   git = {
     enable = true,
   },
+  view = {
+    number = true,
+  },
 }
 
 M.cmp = {
