@@ -62,6 +62,12 @@ M.clipboard = {
   },
 }
 
+M.lsp = {
+  n = {
+    ["<leader>i"] = { ":TSLspImportAll<CR>", "  lsp import all" },
+  },
+}
+
 M.telescope = {
   n = {
     ["<C-P>"] = {

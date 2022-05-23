@@ -12,3 +12,4 @@ vim.api.nvim_command "set undodir=~/.vim/undo"
 vim.cmd "autocmd BufWritePost *.{heex} silent! !mix format %"
 
 require("telescope").load_extension "fzf"
+require("custom.treesitter")

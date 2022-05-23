@@ -78,6 +78,7 @@ M.setup_lsp = function(attach, capabilities)
     on_attach = function(client)
       client.resolved_capabilities.document_formatting = false
       vim.cmd "autocmd BufWritePre *.ts EslintFixAll"
+      vim.cmd "autocmd BufWritePre *.ts TSLspOrganizeSync"
       -- defaults
       ts_utils.setup {
         debug = false,

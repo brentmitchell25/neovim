@@ -19,12 +19,7 @@ return {
   ["vim-scripts/ReplaceWithRegister"] = {},
   ["MunifTanjim/nui.nvim"] = {},
   ["williamboman/nvim-lsp-installer"] = {},
-  ["kana/vim-textobj-user"] = {},
-  ["andyl/vim-textobj-elixir"] = {
-    requires = {
-      ["kana/vim-textobj-user"] = {},
-    },
-  },
+  ["nvim-treesitter/nvim-treesitter-textobjects"] = {},
   ["ThePrimeagen/refactoring.nvim"] = {
     requires = {
       { "nvim-lua/plenary.nvim" },
