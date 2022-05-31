@@ -7,7 +7,9 @@ return {
   ["vim-scripts/marvim"] = {},
   ["tpope/vim-fugitive"] = {},
   ["michaeljsmith/vim-indent-object"] = {},
-  ["terryma/vim-multiple-cursors"] = {},
+  ["mg979/vim-visual-multi"] = {
+    branch = "master"
+  },
   ["tpope/vim-repeat"] = {},
   ["tpope/vim-surround"] = {},
   ["simnalamburt/vim-mundo"] = {},
@@ -69,15 +71,15 @@ return {
       require("modes").setup()
     end,
   },
-  ["rust-lang/rust.vim"] = {
-    opt = true,
-  },
-  ["simrat39/rust-tools.nvim"] = {
-    opt = true,
-    setup = function()
-      nvchad.packer_lazy_load "rust-tools.nvim"
-    end,
-  },
+  --["rust-lang/rust.vim"] = {
+    --opt = true,
+  --},
+  --["simrat39/rust-tools.nvim"] = {
+    --opt = true,
+    --setup = function()
+      --nvchad.packer_lazy_load "rust-tools.nvim"
+    --end,
+  --},
   ["mfussenegger/nvim-dap"] = {
     opt = true,
   },

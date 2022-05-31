@@ -1,14 +1,5 @@
 local M = {}
 
-local map = nvchad.map
-
--- dial
-map("n", "<C-a>", require("dial.map").inc_normal(), { noremap = true })
-map("n", "<C-x>", require("dial.map").dec_normal(), { noremap = true })
-map("v", "<C-a>", require("dial.map").inc_visual(), { noremap = true })
-map("v", "<C-x>", require("dial.map").dec_visual(), { noremap = true })
-map("v", "g<C-a>", require("dial.map").inc_gvisual(), { noremap = true })
-map("v", "g<C-x>", require("dial.map").dec_gvisual(), { noremap = true })
 
 M.markdown = {
   n = {
@@ -29,9 +20,8 @@ M.general = {
 }
 
 M.copilot = {
-  mode_opts = { expr = true },
   i = {
-    ["<C-L>"] = { 'copilot#Accept("<CR>")', "   copilot accept" },
+    ["<C-L>"] = { 'copilot#Accept("<CR>")', "   copilot accept", opts = { expr = true, silent = true, script = true} },
   },
 }
 

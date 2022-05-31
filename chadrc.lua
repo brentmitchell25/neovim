@@ -3,6 +3,7 @@ local M = {}
 local plugin_conf = require "custom.plugins.configs"
 local userPlugins = require "custom.plugins"
 
+
 M.plugins = {
   options = {
     lspconfig = {
