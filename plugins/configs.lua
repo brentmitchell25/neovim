@@ -11,10 +11,21 @@ M.nvimtree = {
   },
 }
 
+M.telescope = {
+  defaults = {
+    file_sorter = nil,
+    generic_sorter = nil,
+  },
+  extensions = {
+    fzf = {},
+    luasnip = {},
+  },
+}
+
 M.cmp = {
   sources = {
-    { name = "nvim_lsp" },
     { name = "luasnip" },
+    { name = "nvim_lsp" },
     { name = "buffer" },
     { name = "nvim_lua" },
     { name = "path" },
@@ -22,14 +33,7 @@ M.cmp = {
   },
   formatting = {
     format = function(entry, vim_item)
-      local icons = require("plugins.configs.lspkind_icons")
-      vim_item.kind = string.format("%s %s", icons[vim_item.kind], vim_item.kind)
-
       vim_item.menu = ({
-        nvim_lsp = "[LSP]",
-        nvim_lua = "[Lua]",
-        buffer = "[BUF]",
-        path = "[Path]",
         cmp_tabnine = "[TN]",
       })[entry.source.name]
 

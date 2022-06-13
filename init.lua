@@ -12,13 +12,9 @@ map("v", "<C-x>", require("dial.map").dec_visual(), { noremap = true })
 map("v", "g<C-a>", require("dial.map").inc_gvisual(), { noremap = true })
 map("v", "g<C-x>", require("dial.map").dec_gvisual(), { noremap = true })
 
-
 -- mundo
 vim.api.nvim_command "set undofile"
 vim.api.nvim_command "set undodir=~/.vim/undo"
 
 -- formatting
 vim.cmd "autocmd BufWritePost *.{heex} silent! !mix format %"
-
-require("telescope").load_extension "fzf"
-require("custom.treesitter")

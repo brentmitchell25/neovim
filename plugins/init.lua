@@ -8,7 +8,7 @@ return {
   ["tpope/vim-fugitive"] = {},
   ["michaeljsmith/vim-indent-object"] = {},
   ["mg979/vim-visual-multi"] = {
-    branch = "master"
+    branch = "master",
   },
   ["tpope/vim-repeat"] = {},
   ["tpope/vim-surround"] = {},
@@ -28,6 +28,8 @@ return {
       { "nvim-treesitter/nvim-treesitter" },
     },
   },
+  ["benfowler/telescope-luasnip.nvim"] = {},
+  ["LinArcX/telescope-env.nvim"] = {},
   ["goolord/alpha-nvim"] = {
     disable = false,
   },
@@ -72,13 +74,13 @@ return {
     end,
   },
   --["rust-lang/rust.vim"] = {
-    --opt = true,
+  --opt = true,
   --},
   --["simrat39/rust-tools.nvim"] = {
-    --opt = true,
-    --setup = function()
-      --nvchad.packer_lazy_load "rust-tools.nvim"
-    --end,
+  --opt = true,
+  --setup = function()
+  --nvchad.packer_lazy_load "rust-tools.nvim"
+  --end,
   --},
   ["mfussenegger/nvim-dap"] = {
     opt = true,

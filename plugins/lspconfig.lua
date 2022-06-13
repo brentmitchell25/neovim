@@ -28,11 +28,11 @@ M.setup_lsp = function(attach, capabilities)
   end
   lsp_installer.setup {}
 
-  lspconfig.tailwindcss.setup {
-    on_attach = on_attach,
-    capabilities = capabilities,
-    filetypes = { "heex", "html" },
-  }
+  --lspconfig.tailwindcss.setup {
+  --on_attach = on_attach,
+  --capabilities = capabilities,
+  --filetypes = { "heex", "html" },
+  --}
   lspconfig.html.setup {
     on_attach = on_attach,
     capabilities = capabilities,
@@ -112,12 +112,20 @@ M.setup_lsp = function(attach, capabilities)
 
       -- required to fix code action ranges and filter diagnostics
       ts_utils.setup_client(client)
-
-      print "TSLSP attached"
     end,
   }
 
-  local default_servers = { "dockerls", "eslint", "elixirls", "pyright", "jsonls", "sqlls", "bashls", "yamlls" }
+  local default_servers = {
+    "dockerls",
+    "eslint",
+    "elixirls",
+    "pyright",
+    "jsonls",
+    "sqlls",
+    "bashls",
+    "yamlls",
+    "angularls",
+  }
   for _, lsp in pairs(default_servers) do
     lspconfig[lsp].setup {
       on_attach = on_attach,

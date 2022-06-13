@@ -36,7 +36,7 @@ local sources = {
   b.formatting.stylua.with {
     extra_args = { "--indent-width", "2", "--indent-type", "Spaces" },
   },
-  b.diagnostics.luacheck.with { extra_args = { "--global vim" } },
+  b.diagnostics.luacheck.with { extra_args = { "--global vim s c t f d i r sn isn" } },
 
   -- Rust
   b.formatting.rustfmt.with {

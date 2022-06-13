@@ -1,5 +1,7 @@
-local M = {}
+local ls = require "luasnip"
+local selectChoice = require "luasnip.extras.select_choice"
 
+local M = {}
 
 M.markdown = {
   n = {
@@ -10,6 +12,7 @@ M.markdown = {
 M.general = {
   i = {
     ["<C-l>"] = "",
+    ["jk"] = { "<Esc>", "  escape to normal mode" },
   },
   n = {
     ["<C-h>"] = { ":TmuxNavigateLeft<CR>", "  move left" },
@@ -19,9 +22,72 @@ M.general = {
   },
 }
 
+M.luasnip = {
+  n = {
+    -- source luasnip
+    ["<leader>S"] = { ":source ~/.config/nvim/lua/custom/plugins/luasnip.lua<CR>", "  source lua snippets" },
+  },
+  i = {
+    ["<C-k>"] = {
+      function()
+        if ls.expand_or_jumpable() then
+          ls.expand_or_jump()
+        end
+      end,
+      " expand snippet or jump to next snippet",
+      opts = { silent = true },
+    },
+    ["<C-j>"] = {
+      function()
+        if ls.jumpable(-1) then
+          ls.jump(-1)
+        end
+      end,
+      " jump to previous snippet",
+      opts = { silent = true },
+    },
+    ["<C-m>"] = {
+      function()
+        if ls.choice_active() then
+          ls.change_choice(1)
+        end
+      end,
+      " change choice",
+    },
+    ["<C-u>"] = {
+      selectChoice,
+      " select choice",
+    },
+  },
+  v = {
+    ["<C-k>"] = {
+      function()
+        if ls.expand_or_jumpable() then
+          ls.expand_or_jump()
+        end
+      end,
+      " expand snippet or jump to next snippet",
+      opts = { silent = true },
+    },
+    ["<C-j>"] = {
+      function()
+        if ls.jumpable(-1) then
+          ls.jump(-1)
+        end
+      end,
+      " jump to previous snippet",
+      opts = { silent = true },
+    },
+  },
+}
+
 M.copilot = {
   i = {
-    ["<C-L>"] = { 'copilot#Accept("<CR>")', "   copilot accept", opts = { expr = true, silent = true, script = true} },
+    ["<C-L>"] = {
+      'copilot#Accept("<CR>")',
+      "   copilot accept",
+      opts = { expr = true, silent = true, script = true },
+    },
   },
 }
 
