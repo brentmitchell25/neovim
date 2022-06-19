@@ -28,6 +28,12 @@ return {
       require("nvim-treesitter.configs").setup()
     end,
   },
+  ["kevinhwang91/nvim-ufo"] = {
+    requires = "kevinhwang91/promise-async",
+    config = function()
+      require("custom.plugins.ufo").setup()
+    end,
+  },
   ["nvim-neotest/neotest"] = {
     requires = {
       "nvim-lua/plenary.nvim",
