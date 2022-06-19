@@ -22,6 +22,25 @@ return {
   ["MunifTanjim/nui.nvim"] = {},
   ["williamboman/nvim-lsp-installer"] = {},
   ["nvim-treesitter/nvim-treesitter-textobjects"] = {},
+  ["nvim-treesitter/playground"] = {
+    cmd = "TSCaptureUnderCursor",
+    config = function()
+      require("nvim-treesitter.configs").setup()
+    end,
+  },
+  ["nvim-neotest/neotest"] = {
+    requires = {
+      "nvim-lua/plenary.nvim",
+      "nvim-treesitter/nvim-treesitter",
+      "antoinemadec/FixCursorHold.nvim",
+      "nvim-neotest/neotest-plenary",
+      "haydenmeade/neotest-jest",
+      "akinsho/neotest-go",
+    },
+    config = function()
+      require("custom.plugins.neotest").setup()
+    end,
+  },
   ["ThePrimeagen/refactoring.nvim"] = {
     requires = {
       { "nvim-lua/plenary.nvim" },
@@ -30,9 +49,9 @@ return {
   },
   ["benfowler/telescope-luasnip.nvim"] = {},
   ["LinArcX/telescope-env.nvim"] = {},
-  ["goolord/alpha-nvim"] = {
-    disable = false,
-  },
+  -- ["goolord/alpha-nvim"] = {
+  --   disable = false,
+  -- },
   ["folke/trouble.nvim"] = {
     config = function()
       require("trouble").setup()
@@ -48,15 +67,15 @@ return {
   ["nvim-telescope/telescope-fzf-native.nvim"] = {
     run = "make",
   },
-  ["bennypowers/nvim-regexplainer"] = {
-    config = function()
-      require("custom.plugins.regexplainer").setup()
-    end,
-    requires = {
-      "nvim-lua/plenary.nvim",
-      "MunifTanjim/nui.nvim",
-    },
-  },
+  -- ["bennypowers/nvim-regexplainer"] = {
+  --   config = function()
+  --     require("custom.plugins.regexplainer").setup()
+  --   end,
+  --   requires = {
+  --     "nvim-lua/plenary.nvim",
+  --     "MunifTanjim/nui.nvim",
+  --   },
+  -- },
   ["monaqa/dial.nvim"] = {
     config = function()
       require("custom.plugins.dial").setup()

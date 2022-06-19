@@ -124,7 +124,6 @@ M.setup_lsp = function(attach, capabilities)
     "sqlls",
     "bashls",
     "yamlls",
-    "angularls",
   }
   for _, lsp in pairs(default_servers) do
     lspconfig[lsp].setup {

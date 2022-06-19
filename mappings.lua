@@ -1,6 +1,3 @@
-local ls = require "luasnip"
-local selectChoice = require "luasnip.extras.select_choice"
-
 local M = {}
 
 M.markdown = {
@@ -22,14 +19,27 @@ M.general = {
   },
 }
 
+M.neotest = {
+  i = {},
+}
+
+M.treesitter = {
+  n = {
+    ["<leader>cu"] = { "<cmd> TSCaptureUnderCursor <CR>", "  ts capture under cursor" },
+    ["<leader>cp"] = { "<cmd> TSPlaygroundToggle <CR>", "  ts playground toggle" },
+  },
+}
+
 M.luasnip = {
   n = {
     -- source luasnip
     ["<leader>S"] = { ":source ~/.config/nvim/lua/custom/plugins/luasnip.lua<CR>", "  source lua snippets" },
+    ["<C-N>"] = { "", "  source lua snippets" },
   },
   i = {
     ["<C-k>"] = {
       function()
+        local ls = require "luasnip"
         if ls.expand_or_jumpable() then
           ls.expand_or_jump()
         end
@@ -39,6 +49,7 @@ M.luasnip = {
     },
     ["<C-j>"] = {
       function()
+        local ls = require "luasnip"
         if ls.jumpable(-1) then
           ls.jump(-1)
         end
@@ -46,22 +57,26 @@ M.luasnip = {
       " jump to previous snippet",
       opts = { silent = true },
     },
-    ["<C-m>"] = {
+    ["<C-n>"] = {
       function()
+        local ls = require "luasnip"
         if ls.choice_active() then
           ls.change_choice(1)
         end
       end,
-      " change choice",
+      " change choice",
     },
     ["<C-u>"] = {
-      selectChoice,
+      function()
+        require "luasnip.extras.select_choice"()
+      end,
       " select choice",
     },
   },
   v = {
     ["<C-k>"] = {
       function()
+        local ls = require "luasnip"
         if ls.expand_or_jumpable() then
           ls.expand_or_jump()
         end
@@ -71,6 +86,7 @@ M.luasnip = {
     },
     ["<C-j>"] = {
       function()
+        local ls = require "luasnip"
         if ls.jumpable(-1) then
           ls.jump(-1)
         end

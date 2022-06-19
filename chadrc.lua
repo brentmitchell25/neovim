@@ -1,13 +1,8 @@
 local M = {}
 
-local plugin_conf = require "custom.plugins.configs"
+local override = require "custom.override"
 local userPlugins = require "custom.plugins"
 local snippets = require "custom.plugins.luasnip"
-
-require("telescope").load_extension "fzf"
-require("telescope").load_extension "luasnip"
-require("telescope").load_extension "env"
-require "custom.treesitter"
 
 M.plugins = {
   options = {
@@ -16,10 +11,11 @@ M.plugins = {
     },
   },
   override = {
-    ["L3MON4D3/LuaSnip"] = snippets.ls,
-    ["kyazdani42/nvim-tree.lua"] = plugin_conf.nvimtree,
-    ["hrsh7th/nvim-cmp"] = plugin_conf.cmp,
-    ["nvim-telescope/telescope.nvim"] = plugin_conf.telescope,
+    ["L3MON4D3/LuaSnip"] = snippets.override,
+    ["kyazdani42/nvim-tree.lua"] = override.nvimtree,
+    ["hrsh7th/nvim-cmp"] = override.cmp,
+    ["nvim-treesitter/nvim-treesitter"] = override.treesitter,
+    ["nvim-telescope/telescope.nvim"] = override.telescope,
   },
   user = userPlugins,
 }
