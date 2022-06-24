@@ -151,7 +151,15 @@ M.telescope = {
 
 M.hop = {
   n = {
-    ["<leader><leader>"] = { ":HopChar1<cr>", "  hop to specific character" },
+    ["<leader><leader>"] = { ":HopChar1<cr>", "  hop to specific character in buffer" },
+    ["<leader>smp"] = { "<cmd> HopPatternMW <CR>", "  hop pattern any buffer" },
+    ["<leader>sma"] = { "<cmd> HopAnywhereMW <CR>", "  hop anywhere any buffer" },
+    ["<leader>smc"] = { "<cmd> HopChar2MW <CR>", "  hop character any buffer" },
+    ["<leader>sml"] = { "<cmd> HopLineMW <CR>", "  hop line any buffer" },
+    ["<leader>sp"] = { "<cmd> HopPattern <CR>", "  hop pattern in buffer" },
+    ["<leader>sa"] = { "<cmd> HopAnywhere <CR>", "  hop anywhere in buffer" },
+    ["<leader>sc"] = { "<cmd> HopChar2 <CR>", "  hop character in buffer" },
+    ["<leader>sl"] = { "<cmd> HopLine <CR>", "  hop line in buffer" },
   },
 }
 

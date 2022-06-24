@@ -15,16 +15,16 @@ M.telescope = {
   defaults = {
     file_sorter = nil,
     generic_sorter = nil,
-    file_ignore_patterns = { "node_modules", ".yarn", ".git" },
+    file_ignore_patterns = { "node_modules/", ".yarn/", ".git/" },
   },
   pickers = {
     find_files = {
       find_command = {
         "fd",
+        "--hidden",
         "--type",
         "f",
       },
-      hidden = true,
     },
     git_files = {},
   },

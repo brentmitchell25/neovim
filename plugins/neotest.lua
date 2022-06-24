@@ -11,6 +11,9 @@ M.setup = function()
     adapters = {
       require "neotest-plenary",
       require "neotest-jest",
+      require "neotest-jest" {
+        jestCommand = "npm test --",
+      },
       require "neotest-go",
     },
   }
