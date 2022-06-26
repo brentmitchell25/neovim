@@ -66,6 +66,15 @@ return {
       "kyazdani42/nvim-web-devicons",
     },
   },
+  ["TimUntersberger/neogit"] = {
+    config = function()
+      require("custom.plugins.neogit").setup()
+    end,
+    requires = {
+      "nvim-lua/plenary.nvim",
+      "sindrets/diffview.nvim",
+    },
+  },
   ["iamcco/markdown-preview.nvim"] = {
     ft = "markdown",
     run = "cd app && yarn install",
@@ -108,7 +117,9 @@ return {
   --end,
   --},
   ["mfussenegger/nvim-dap"] = {
-    opt = true,
+    config = function()
+      require("custom.plugins.dap").setup()
+    end,
   },
   ["jose-elias-alvarez/null-ls.nvim"] = {
     after = "nvim-lspconfig",

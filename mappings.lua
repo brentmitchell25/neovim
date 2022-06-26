@@ -30,6 +30,26 @@ M.treesitter = {
   },
 }
 
+M.dap = {
+  n = {
+    ["<leader>db"] = { "<cmd>lua require'dap'.toggle_breakpoint()<cr>", "  Breakpoint" },
+    ["<leader>dc"] = { "<cmd>lua require'dap'.continue()<cr>", "  Continue" },
+    ["<leader>di"] = { "<cmd>lua require'dap'.step_into()<cr>", "  Into" },
+    ["<leader>do"] = { "<cmd>lua require'dap'.step_over()<cr>", "  Over" },
+    ["<leader>dO"] = { "<cmd>lua require'dap'.step_out()<cr>", "  Out" },
+    ["<leader>dr"] = { "<cmd>lua require'dap'.repl.toggle()<cr>", "  Repl" },
+    ["<leader>dl"] = { "<cmd>lua require'dap'.run_last()<cr>", "  Last" },
+    ["<leader>du"] = { "<cmd>lua require'dapui'.toggle()<cr>", "  UI" },
+    ["<leader>dx"] = { "<cmd>lua require'dap'.terminate()<cr>", "  Exit" },
+  },
+}
+
+M.git = {
+  n = {
+    ["<leader>gn"] = { ":Neogit<cr>", "  Neogit" },
+  },
+}
+
 M.luasnip = {
   n = {
     -- source luasnip
