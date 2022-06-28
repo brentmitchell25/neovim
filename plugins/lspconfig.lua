@@ -1,24 +1,9 @@
-local lsp_ts_utils_ok, ts_utils = pcall(require, "nvim-lsp-ts-utils")
-local lsp_installer_ok, lsp_installer = pcall(require, "nvim-lsp-installer")
-local lspconfig_ok, lspconfig = pcall(require, "lspconfig")
-local quickfix = require "custom.plugins.lsp-fix-current"
-
-if not lsp_ts_utils_ok then
-  print "nvim-lsp-ts-utils not found"
-  return
-end
-if not lsp_installer_ok then
-  print "nvim-lsp-ts-utils not found"
-  return
-end
-if not lspconfig_ok then
-  print "lspconfig not found"
-  return
-end
-
 local M = {}
 
 M.setup_lsp = function(attach, capabilities)
+  local ts_utils = require "nvim-lsp-ts-utils"
+  local lspconfig = require "lspconfig"
+  local quickfix = require "custom.plugins.lsp-fix-current"
   capabilities.textDocument.foldingRange = {
     dynamicRegistration = false,
     lineFoldingOnly = true,
@@ -30,7 +15,6 @@ M.setup_lsp = function(attach, capabilities)
     -- Enable completion triggered by <c-x><c-o>
     vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
   end
-  lsp_installer.setup {}
 
   --lspconfig.tailwindcss.setup {
   --on_attach = on_attach,
@@ -65,7 +49,6 @@ M.setup_lsp = function(attach, capabilities)
       },
     },
   }
-
   lspconfig.tsserver.setup {
     -- Needed for inlayHints. Merge this table with your settings or copy
     -- it from the source if you want to add your own init_options.

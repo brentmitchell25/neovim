@@ -1,5 +1,6 @@
 return {
   -- ["github/copilot.vim"] = {},
+  ["jose-elias-alvarez/nvim-lsp-ts-utils"] = {},
   ["tpope/vim-dadbod"] = {},
   ["kristijanhusak/vim-dadbod-ui"] = {},
   ["janko/vim-test"] = {},
@@ -15,12 +16,10 @@ return {
   ["simnalamburt/vim-mundo"] = {},
   ["christoomey/vim-tmux-navigator"] = {},
   ["tpope/vim-abolish"] = {},
-  ["jose-elias-alvarez/nvim-lsp-ts-utils"] = {},
   ["wellle/targets.vim"] = {},
   ["AndrewRadev/splitjoin.vim"] = {},
   ["vim-scripts/ReplaceWithRegister"] = {},
   ["MunifTanjim/nui.nvim"] = {},
-  ["williamboman/nvim-lsp-installer"] = {},
   ["nvim-treesitter/nvim-treesitter-textobjects"] = {},
   ["nvim-treesitter/playground"] = {
     cmd = "TSCaptureUnderCursor",
@@ -34,19 +33,19 @@ return {
       require("custom.plugins.ufo").setup()
     end,
   },
-  ["nvim-neotest/neotest"] = {
-    requires = {
-      "nvim-lua/plenary.nvim",
-      "nvim-treesitter/nvim-treesitter",
-      "antoinemadec/FixCursorHold.nvim",
-      "nvim-neotest/neotest-plenary",
-      "haydenmeade/neotest-jest",
-      "akinsho/neotest-go",
-    },
-    config = function()
-      require("custom.plugins.neotest").setup()
-    end,
-  },
+  -- ["nvim-neotest/neotest"] = {
+  --   requires = {
+  --     "nvim-lua/plenary.nvim",
+  --     "nvim-treesitter/nvim-treesitter",
+  --     "antoinemadec/FixCursorHold.nvim",
+  --     "nvim-neotest/neotest-plenary",
+  --     "haydenmeade/neotest-jest",
+  --     "akinsho/neotest-go",
+  --   },
+  --   config = function()
+  --     require("custom.plugins.neotest").setup()
+  --   end,
+  -- },
   ["ThePrimeagen/refactoring.nvim"] = {
     requires = {
       { "nvim-lua/plenary.nvim" },
@@ -82,15 +81,15 @@ return {
   ["nvim-telescope/telescope-fzf-native.nvim"] = {
     run = "make",
   },
-  -- ["bennypowers/nvim-regexplainer"] = {
-  --   config = function()
-  --     require("custom.plugins.regexplainer").setup()
-  --   end,
-  --   requires = {
-  --     "nvim-lua/plenary.nvim",
-  --     "MunifTanjim/nui.nvim",
-  --   },
-  -- },
+  ["bennypowers/nvim-regexplainer"] = {
+    config = function()
+      require("custom.plugins.regexplainer").setup()
+    end,
+    requires = {
+      "nvim-lua/plenary.nvim",
+      "MunifTanjim/nui.nvim",
+    },
+  },
   ["monaqa/dial.nvim"] = {
     config = function()
       require("custom.plugins.dial").setup()
