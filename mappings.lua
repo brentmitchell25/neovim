@@ -54,7 +54,6 @@ M.luasnip = {
   n = {
     -- source luasnip
     ["<leader>S"] = { ":source ~/.config/nvim/lua/custom/plugins/luasnip.lua<CR>", "  source lua snippets" },
-    ["<C-N>"] = { "", "  source lua snippets" },
   },
   i = {
     ["<C-k>"] = {
