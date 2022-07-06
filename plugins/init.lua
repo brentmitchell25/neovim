@@ -38,9 +38,8 @@ return {
   --     "nvim-lua/plenary.nvim",
   --     "nvim-treesitter/nvim-treesitter",
   --     "antoinemadec/FixCursorHold.nvim",
-  --     "nvim-neotest/neotest-plenary",
   --     "haydenmeade/neotest-jest",
-  --     "akinsho/neotest-go",
+  --     "nvim-neotest/neotest-go",
   --   },
   --   config = function()
   --     require("custom.plugins.neotest").setup()

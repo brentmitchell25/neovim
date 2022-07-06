@@ -1,20 +1,14 @@
-local ok, neotest = pcall(require, "neotest")
-
-if not ok then
-  return
-end
-
 local M = {}
 
 M.setup = function()
+  local neotest = require "neotest"
+
   neotest.setup {
     adapters = {
-      require "neotest-plenary",
-      require "neotest-jest",
       require "neotest-jest" {
         jestCommand = "npm test --",
       },
-      require "neotest-go",
+      -- require "neotest-go",
     },
   }
 end
