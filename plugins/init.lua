@@ -21,6 +21,7 @@ return {
   ["vim-scripts/ReplaceWithRegister"] = {},
   ["MunifTanjim/nui.nvim"] = {},
   ["nvim-treesitter/nvim-treesitter-textobjects"] = {},
+  ["ray-x/lsp_signature.nvim"] = {},
   ["nvim-treesitter/playground"] = {
     cmd = "TSCaptureUnderCursor",
     config = function()
@@ -31,6 +32,13 @@ return {
     requires = "kevinhwang91/promise-async",
     config = function()
       require("custom.plugins.ufo").setup()
+    end,
+  },
+  ["windwp/nvim-ts-autotag"] = {
+    ft = { "html", "javascriptreact" },
+    after = "nvim-treesitter",
+    config = function()
+      require("custom.plugins.autotag").setup()
     end,
   },
   -- ["nvim-neotest/neotest"] = {

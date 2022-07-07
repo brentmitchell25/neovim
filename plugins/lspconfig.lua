@@ -14,6 +14,10 @@ M.setup_lsp = function(attach, capabilities)
     attach(client, bufnr)
     -- Enable completion triggered by <c-x><c-o>
     vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
+    -- Add multiple signatures for method signature help dialogues
+    require("lsp_signature").on_attach({
+      bind = true,
+    }, bufnr)
   end
 
   --lspconfig.tailwindcss.setup {
@@ -62,10 +66,19 @@ M.setup_lsp = function(attach, capabilities)
     },
     --
     capabilities = capabilities,
-    on_attach = function(client)
+    on_attach = function(client, bufnr)
       client.resolved_capabilities.document_formatting = false
-      vim.cmd "autocmd BufWritePre *.ts EslintFixAll"
-      vim.cmd "autocmd BufWritePre *.ts TSLspOrganizeSync"
+      local augroup = vim.api.nvim_create_augroup("TSFormatting", {})
+      vim.api.nvim_create_autocmd("BufWritePre", {
+        group = augroup,
+        buffer = bufnr,
+        command = [[ silent! :EslintFixAll ]],
+      })
+      vim.api.nvim_create_autocmd("BufWritePre", {
+        group = augroup,
+        buffer = bufnr,
+        command = [[ silent! :TSLspOrganizeSync ]],
+      })
       -- defaults
       ts_utils.setup {
         debug = false,
