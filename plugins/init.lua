@@ -22,6 +22,12 @@ return {
   ["MunifTanjim/nui.nvim"] = {},
   ["nvim-treesitter/nvim-treesitter-textobjects"] = {},
   ["ray-x/lsp_signature.nvim"] = {},
+  ["neovim/nvim-lspconfig"] = {
+    config = function()
+      require "plugins.configs.lspconfig"
+      require "custom.plugins.lspconfig"
+    end,
+  },
   ["nvim-treesitter/playground"] = {
     cmd = "TSCaptureUnderCursor",
     config = function()

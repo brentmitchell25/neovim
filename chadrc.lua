@@ -5,11 +5,6 @@ local userPlugins = require "custom.plugins"
 local snippets = require "custom.plugins.luasnip"
 
 M.plugins = {
-  options = {
-    lspconfig = {
-      setup_lspconf = "custom.plugins.lspconfig",
-    },
-  },
   override = {
     ["L3MON4D3/LuaSnip"] = snippets.override,
     ["kyazdani42/nvim-tree.lua"] = override.nvimtree,
