@@ -28,6 +28,12 @@ return {
       require "custom.plugins.lspconfig"
     end,
   },
+  ["https://git.sr.ht/~whynothugo/lsp_lines.nvim"] = {
+    cmd = "TSCaptureUnderCursor",
+    config = function()
+      require("lsp_lines").register_lsp_virtual_lines()
+    end,
+  },
   ["nvim-treesitter/playground"] = {
     cmd = "TSCaptureUnderCursor",
     config = function()
