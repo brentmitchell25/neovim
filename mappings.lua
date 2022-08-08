@@ -8,7 +8,6 @@ M.markdown = {
 
 M.general = {
   i = {
-    ["<C-l>"] = "",
     ["jk"] = { "<Esc>", "  escape to normal mode" },
   },
   n = {
@@ -126,9 +125,10 @@ M.copilot = {
   },
 }
 
-M.bufferline = {
+M.disabled = {
   n = {
     ["<S-b>"] = "",
+    ["<C-l>"] = "",
   },
 }
 

@@ -22,6 +22,9 @@ return {
   ["MunifTanjim/nui.nvim"] = {},
   ["nvim-treesitter/nvim-treesitter-textobjects"] = {},
   ["ray-x/lsp_signature.nvim"] = {},
+  ["folke/which-key.nvim"] = {
+    disable = false,
+  },
   ["neovim/nvim-lspconfig"] = {
     config = function()
       require "plugins.configs.lspconfig"
