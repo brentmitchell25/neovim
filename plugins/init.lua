@@ -8,9 +8,9 @@ return {
   ["vim-scripts/marvim"] = {},
   ["tpope/vim-fugitive"] = {},
   ["michaeljsmith/vim-indent-object"] = {},
-  ["mg979/vim-visual-multi"] = {
-    branch = "master",
-  },
+  -- ["mg979/vim-visual-multi"] = {
+  --   branch = "master",
+  -- },
   ["tpope/vim-repeat"] = {},
   ["tpope/vim-surround"] = {},
   ["simnalamburt/vim-mundo"] = {},
@@ -23,7 +23,7 @@ return {
   ["nvim-treesitter/nvim-treesitter-textobjects"] = {},
   ["ray-x/lsp_signature.nvim"] = {},
   ["folke/which-key.nvim"] = {
-    disable = false,
+    disable = true,
   },
   ["neovim/nvim-lspconfig"] = {
     config = function()
@@ -43,12 +43,12 @@ return {
       require("nvim-treesitter.configs").setup()
     end,
   },
-  ["kevinhwang91/nvim-ufo"] = {
-    requires = "kevinhwang91/promise-async",
-    config = function()
-      require("custom.plugins.ufo").setup()
-    end,
-  },
+  -- ["kevinhwang91/nvim-ufo"] = {
+  --   requires = "kevinhwang91/promise-async",
+  --   config = function()
+  --     require("custom.plugins.ufo").setup()
+  --   end,
+  -- },
   ["windwp/nvim-ts-autotag"] = {
     ft = { "html", "javascriptreact" },
     after = "nvim-treesitter",
