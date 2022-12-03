@@ -194,7 +194,7 @@ M.dadbod = {
 M.lsp = {
   v = {
     ["<leader>ca"] = {
-      "<cmd>lua vim.lsp.buf.range_code_action()<CR>",
+      "<cmd>lua vim.lsp.buf.code_action()<CR>",
       "  choose code action for visual selection",
     },
   },

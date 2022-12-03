@@ -66,7 +66,7 @@ lspconfig.tsserver.setup {
   --
   capabilities = capabilities,
   on_attach = function(client, bufnr)
-    client.resolved_capabilities.document_formatting = false
+    client.server_capabilities.document_formatting = false
     local augroup = vim.api.nvim_create_augroup("TSFormatting", {})
     vim.api.nvim_create_autocmd("BufWritePre", {
       group = augroup,
@@ -114,7 +114,7 @@ lspconfig.tsserver.setup {
   end,
 }
 
-lspconfig.elixirls.setup({
+lspconfig.elixirls.setup {
   cmd = { "/Users/brentmitchell/.local/share/nvim/mason/packages/elixir-ls/language_server.sh" },
   capabilities = capabilities,
   on_attach = on_attach,
@@ -127,11 +127,10 @@ lspconfig.elixirls.setup({
       -- I also choose to turn off the auto dep fetching feature.
       -- It often get's into a weird state that requires deleting
       -- the .elixir_ls directory and restarting your editor.
-      fetchDeps = false
-    }
-  }
-})
-
+      fetchDeps = false,
+    },
+  },
+}
 
 local default_servers = {
   "dockerls",
