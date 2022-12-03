@@ -1,3 +1,6 @@
+local overrides = require "custom.plugins.overrides"
+local snippets = require "custom.plugins.luasnip"
+
 return {
   -- ["github/copilot.vim"] = {},
   ["jose-elias-alvarez/nvim-lsp-ts-utils"] = {},
@@ -25,6 +28,10 @@ return {
   ["folke/which-key.nvim"] = {
     disable = true,
   },
+  ["kyazdani42/nvim-tree.lua"] = { override_options = overrides.nvimtree },
+  ["hrsh7th/nvim-cmp"] = { override_options = overrides.cmp },
+  ["nvim-treesitter/nvim-treesitter"] = { override_options = overrides.treesitter },
+  ["L3MON4D3/LuaSnip"] = { override_options = snippets.override },
   ["neovim/nvim-lspconfig"] = {
     config = function()
       require "plugins.configs.lspconfig"
@@ -43,12 +50,12 @@ return {
       require("nvim-treesitter.configs").setup()
     end,
   },
-  -- ["kevinhwang91/nvim-ufo"] = {
-  --   requires = "kevinhwang91/promise-async",
-  --   config = function()
-  --     require("custom.plugins.ufo").setup()
-  --   end,
-  -- },
+  ["kevinhwang91/nvim-ufo"] = {
+    requires = "kevinhwang91/promise-async",
+    config = function()
+      require("custom.plugins.ufo").setup()
+    end,
+  },
   ["windwp/nvim-ts-autotag"] = {
     ft = { "html", "javascriptreact" },
     after = "nvim-treesitter",
@@ -76,9 +83,6 @@ return {
   },
   ["benfowler/telescope-luasnip.nvim"] = {},
   ["LinArcX/telescope-env.nvim"] = {},
-  -- ["goolord/alpha-nvim"] = {
-  --   disable = false,
-  -- },
   ["folke/trouble.nvim"] = {
     config = function()
       require("trouble").setup()
@@ -155,5 +159,8 @@ return {
     config = function()
       require("custom.plugins.cmp-tabnine").setup()
     end,
+  },
+  ["nvim-telescope/telescope.nvim"] = {
+    override_options = overrides.telescope,
   },
 }

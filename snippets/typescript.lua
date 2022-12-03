@@ -31,7 +31,7 @@ gwt_node = function()
       nil,
       fmt(
         [[
-          describe('{}', () => {{
+          describe('given: {}', () => {{
             {}
           }});
         ]],

@@ -3,6 +3,9 @@ local M = {}
 -- overriding default plugin configs!
 
 M.nvimtree = {
+  filters = {
+    dotfiles = true,
+  },
   git = {
     enable = true,
   },
