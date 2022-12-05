@@ -168,6 +168,36 @@ M.telescope = {
   },
 }
 
+M.trouble = {
+  n = {
+    ["<leader>xx"] = {
+      ":TroubleToggle<cr>",
+      "  toggle trouble",
+      opts = { silent = true, noremap = true },
+    },
+    ["<leader>xw"] = {
+      ":TroubleToggle workspace_diagnostics<cr>",
+      "  trouble workspace diagnostics",
+      opts = { silent = true, noremap = true },
+    },
+    ["<leader>xd"] = {
+      ":TroubleToggle document_diagnostics<cr>",
+      "  trouble document diagnostics",
+      opts = { silent = true, noremap = true },
+    },
+    ["<leader>xl"] = {
+      ":TroubleToggle loclist<cr>",
+      "  trouble location list",
+      opts = { silent = true, noremap = true },
+    },
+    ["gR"] = {
+      ":TroubleToggle lsp_references<cr>",
+      "  trouble lsp references",
+      opts = { silent = true, noremap = true },
+    },
+  },
+}
+
 M.hop = {
   n = {
     ["<leader><leader>"] = { ":HopChar1<cr>", "  hop to specific character in buffer" },

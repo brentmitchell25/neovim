@@ -2,6 +2,7 @@ local ts_utils = require "nvim-lsp-ts-utils"
 local lspconfig = require "lspconfig"
 local quickfix = require "custom.plugins.lsp-fix-current"
 local nvchad_lsp = require "plugins.configs.lspconfig"
+local notify = require "notify"
 
 local capabilities = nvchad_lsp.capabilities
 
@@ -9,6 +10,26 @@ capabilities.textDocument.foldingRange = {
   dynamicRegistration = false,
   lineFoldingOnly = true,
 }
+vim.notify = require "notify"
+
+vim.lsp.handlers["window/showMessage"] = function(_, result, ctx)
+  print "SHOWING ERROR"
+  local client = vim.lsp.get_client_by_id(ctx.client_id)
+  local lvl = ({
+    "ERROR",
+    "WARN",
+    "INFO",
+    "DEBUG",
+  })[result.type]
+  notify({ result.message }, lvl, {
+    title = "LSP | " .. client.name,
+    timeout = 10000,
+    keep = function()
+      return lvl == "ERROR" or lvl == "WARN"
+    end,
+  })
+end
+
 -- Use an on_attach function to only map the following keys
 -- after the language server attaches to the current buffer
 local on_attach = function(client, bufnr)
@@ -115,7 +136,7 @@ lspconfig.tsserver.setup {
 }
 
 lspconfig.elixirls.setup {
-  cmd = { "/Users/brentmitchell/.local/share/nvim/mason/packages/elixir-ls/language_server.sh" },
+  cmd = { "~/.local/share/nvim/mason/packages/elixir-ls/language_server.sh" },
   capabilities = capabilities,
   on_attach = on_attach,
   settings = {

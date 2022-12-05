@@ -23,10 +23,11 @@ return {
   ["AndrewRadev/splitjoin.vim"] = {},
   ["vim-scripts/ReplaceWithRegister"] = {},
   ["MunifTanjim/nui.nvim"] = {},
+  ["rcarriga/nvim-notify"] = {},
   ["nvim-treesitter/nvim-treesitter-textobjects"] = {},
   ["ray-x/lsp_signature.nvim"] = {},
   ["folke/which-key.nvim"] = {
-    disable = true,
+    disable = false,
   },
   ["kyazdani42/nvim-tree.lua"] = { override_options = overrides.nvimtree },
   ["hrsh7th/nvim-cmp"] = { override_options = overrides.cmp },
@@ -107,15 +108,15 @@ return {
   ["nvim-telescope/telescope-fzf-native.nvim"] = {
     run = "make",
   },
-  ["bennypowers/nvim-regexplainer"] = {
-    config = function()
-      require("custom.plugins.regexplainer").setup()
-    end,
-    requires = {
-      "nvim-lua/plenary.nvim",
-      "MunifTanjim/nui.nvim",
-    },
-  },
+  -- ["bennypowers/nvim-regexplainer"] = {
+  --   config = function()
+  --     require("custom.plugins.regexplainer").setup()
+  --   end,
+  --   requires = {
+  --     "nvim-lua/plenary.nvim",
+  --     "MunifTanjim/nui.nvim",
+  --   },
+  -- },
   ["monaqa/dial.nvim"] = {
     config = function()
       require("custom.plugins.dial").setup()
