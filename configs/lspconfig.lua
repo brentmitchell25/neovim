@@ -1,6 +1,6 @@
 local ts_utils = require "nvim-lsp-ts-utils"
 local lspconfig = require "lspconfig"
-local quickfix = require "custom.plugins.lsp-fix-current"
+local quickfix = require "custom.configs.lsp-fix-current"
 local nvchad_lsp = require "plugins.configs.lspconfig"
 local notify = require "notify"
 
@@ -13,7 +13,6 @@ capabilities.textDocument.foldingRange = {
 vim.notify = require "notify"
 
 vim.lsp.handlers["window/showMessage"] = function(_, result, ctx)
-  print "SHOWING ERROR"
   local client = vim.lsp.get_client_by_id(ctx.client_id)
   local lvl = ({
     "ERROR",

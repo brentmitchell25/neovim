@@ -52,7 +52,7 @@ M.git = {
 M.luasnip = {
   n = {
     -- source luasnip
-    ["<leader>S"] = { ":source ~/.config/nvim/lua/custom/plugins/luasnip.lua<CR>", "  source lua snippets" },
+    ["<leader>S"] = { ":source ~/.config/nvim/lua/custom/configs/luasnip.lua<CR>", "  source lua snippets" },
   },
   i = {
     ["<C-k>"] = {
