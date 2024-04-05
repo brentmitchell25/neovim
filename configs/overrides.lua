@@ -35,6 +35,25 @@ M.telescope = {
   extensions = {
     fzf = {},
     luasnip = {},
+    ["ui-select"] = {
+      require("telescope.themes").get_dropdown {
+        -- even more opts
+      },
+
+      -- pseudo code / specification for writing custom displays, like the one
+      -- for "codeactions"
+      -- specific_opts = {
+      --   [kind] = {
+      --     make_indexed = function(items) -> indexed_items, width,
+      --     make_displayer = function(widths) -> displayer
+      --     make_display = function(displayer) -> function(e)
+      --     make_ordinal = function(e) -> string
+      --   },
+      --   -- for example to disable the custom builtin "codeactions" display
+      --      do the following
+      --   codeactions = false,
+      -- }
+    },
   },
 }
 
@@ -120,21 +139,13 @@ M.treesitter = {
 
 M.cmp = {
   sources = {
+    { name = "copilot" },
     { name = "luasnip" },
     { name = "nvim_lsp" },
     { name = "buffer" },
     { name = "nvim_lua" },
     { name = "path" },
     { name = "cmp_tabnine" },
-  },
-  formatting = {
-    format = function(entry, vim_item)
-      vim_item.menu = ({
-        cmp_tabnine = "[TN]",
-      })[entry.source.name]
-
-      return vim_item
-    end,
   },
 }
 

@@ -1,4 +1,5 @@
-local ts_utils = require "nvim-lsp-ts-utils"
+-- local ts_utils = require "nvim-lsp-ts-utils"
+local ts_tools = require "typescript-tools"
 local lspconfig = require "lspconfig"
 local quickfix = require "custom.configs.lsp-fix-current"
 local nvchad_lsp = require "plugins.configs.lspconfig"
@@ -32,18 +33,18 @@ end
 -- Use an on_attach function to only map the following keys
 -- after the language server attaches to the current buffer
 local on_attach = function(client, bufnr)
+  if client.name == "tailwindcss" then
+    require("tailwindcss-colors").buf_attach(bufnr)
+  end
+
   nvchad_lsp.on_attach(client, bufnr)
+
   -- Add multiple signatures for method signature help dialogues
   require("lsp_signature").on_attach({
     bind = true,
   }, bufnr)
 end
 
---lspconfig.tailwindcss.setup {
---on_attach = on_attach,
---capabilities = capabilities,
---filetypes = { "heex", "html" },
---}
 lspconfig.html.setup {
   on_attach = on_attach,
   capabilities = capabilities,
@@ -72,83 +73,103 @@ lspconfig.gopls.setup {
     },
   },
 }
-lspconfig.tsserver.setup {
+
+lspconfig["typescript-tools"].setup {
   -- Needed for inlayHints. Merge this table with your settings or copy
   -- it from the source if you want to add your own init_options.
   --init_options = ts_utils.init_options,
-  init_options = ts_utils.init_options,
-  commands = {
-    QuickFix = {
-      quickfix,
-      description = "Quick Fix",
-    },
-  },
+  -- init_options = ts_utils.init_options,
+  -- commands = {
+  --   QuickFix = {
+  --     quickfix,
+  --     description = "Quick Fix",
+  --   },
+  -- },
   --
   capabilities = capabilities,
+  settings = {
+    expose_as_code_action = {
+      "fix_all",
+      "add_missing_imports",
+    },
+    complete_function_calls = true,
+    code_lens = "all",
+  },
   on_attach = function(client, bufnr)
     client.server_capabilities.document_formatting = false
     local augroup = vim.api.nvim_create_augroup("TSFormatting", {})
+    -- vim.api.nvim_create_autocmd("BufWritePre", {
+    --   group = augroup,
+    --   buffer = bufnr,
+    --   command = [[ silent! call :EslintFixAll ]],
+    -- })
     vim.api.nvim_create_autocmd("BufWritePre", {
       group = augroup,
       buffer = bufnr,
-      command = [[ silent! :EslintFixAll ]],
+      command = [[ silent! call TSToolsOrganizeImports() ]],
     })
-    vim.api.nvim_create_autocmd("BufWritePre", {
-      group = augroup,
-      buffer = bufnr,
-      command = [[ silent! :TSLspOrganizeSync ]],
-    })
+
     -- defaults
-    ts_utils.setup {
-      debug = false,
-      disable_commands = false,
-      enable_import_on_completion = true,
-
-      -- import all
-      import_all_timeout = 5000, -- ms
-      -- lower numbers = higher priority
-      import_all_priorities = {
-        same_file = 1, -- add to existing import statement
-        local_files = 2, -- git files or files with relative path markers
-        buffer_content = 3, -- loaded buffer content
-        buffers = 4, -- loaded buffer names
-      },
-      import_all_scan_buffers = 100,
-      import_all_select_source = false,
-
-      -- filter diagnostics
-      filter_out_diagnostics_by_severity = {},
-      filter_out_diagnostics_by_code = {},
-
-      -- inlay hints
-      auto_inlay_hints = true,
-      inlay_hints_highlight = "Comment",
-
-      -- update imports on file move
-      update_imports_on_move = true,
-      require_confirmation_on_move = false,
-    }
+    -- ts_tools.setup {
+    --   settings = {
+    --     expose_as_code_action = {
+    --       "fix_all",
+    --       "add_missing_imports",
+    --     },
+    --     complete_function_calls = true,
+    --     code_lens = "all",
+    --   },
+    -- }
+    -- ts_utils.setup {
+    --   debug = false,
+    --   disable_commands = false,
+    --   enable_import_on_completion = true,
+    --
+    --   -- import all
+    --   import_all_timeout = 5000, -- ms
+    --   -- lower numbers = higher priority
+    --   import_all_priorities = {
+    --     same_file = 1, -- add to existing import statement
+    --     local_files = 2, -- git files or files with relative path markers
+    --     buffer_content = 3, -- loaded buffer content
+    --     buffers = 4, -- loaded buffer names
+    --   },
+    --   import_all_scan_buffers = 100,
+    --   import_all_select_source = false,
+    --
+    --   -- filter diagnostics
+    --   filter_out_diagnostics_by_severity = {},
+    --   filter_out_diagnostics_by_code = {},
+    --
+    --   -- inlay hints
+    --   auto_inlay_hints = true,
+    --   inlay_hints_highlight = "Comment",
+    --
+    --   -- update imports on file move
+    --   update_imports_on_move = true,
+    --   require_confirmation_on_move = false,
+    -- }
 
     -- required to fix code action ranges and filter diagnostics
-    ts_utils.setup_client(client)
+    -- ts_utils.setup_client(client)
   end,
 }
 
 lspconfig.elixirls.setup {
-  cmd = { "~/.local/share/nvim/mason/packages/elixir-ls/language_server.sh" },
+  cmd = { "/Users/brentmitchell/.local/share/nvim/mason/packages/elixir-ls/language_server.sh" },
   capabilities = capabilities,
   on_attach = on_attach,
   settings = {
-    elixirLS = {
-      -- I choose to disable dialyzer for personal reasons, but
-      -- I would suggest you also disable it unless you are well
-      -- aquainted with dialzyer and know how to use it.
-      dialyzerEnabled = false,
-      -- I also choose to turn off the auto dep fetching feature.
-      -- It often get's into a weird state that requires deleting
-      -- the .elixir_ls directory and restarting your editor.
-      fetchDeps = false,
-    },
+    -- elixirLS = {
+    --   -- I choose to disable dialyzer for personal reasons, but
+    --   -- I would suggest you also disable it unless you are well
+    --   -- aquainted with dialzyer and know how to use it.
+    --   dialyzerEnabled = false,
+    --   -- I also choose to turn off the auto dep fetching feature.
+    --   -- It often get's into a weird state that requires deleting
+    --   -- the .elixir_ls directory and restarting your editor.
+    --   fetchDeps = false,
+    -- },
   },
 }
 
@@ -157,7 +178,9 @@ local default_servers = {
   "eslint",
   "pyright",
   "jsonls",
+  "tailwindcss",
   "sqlls",
+  -- "angularls",
   "bashls",
   "yamlls",
 }
