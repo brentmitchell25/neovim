@@ -6,6 +6,12 @@ local f = ls.function_node
 local function bash(_, _, command)
   local file = io.popen(command, "r")
   local res = {}
+
+  if file == nil then
+    print("Error running command: " .. command)
+    return res
+  end
+
   for line in file:lines() do
     table.insert(res, line)
   end

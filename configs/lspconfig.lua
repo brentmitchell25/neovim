@@ -1,7 +1,4 @@
--- local ts_utils = require "nvim-lsp-ts-utils"
-local ts_tools = require "typescript-tools"
 local lspconfig = require "lspconfig"
-local quickfix = require "custom.configs.lsp-fix-current"
 local nvchad_lsp = require "plugins.configs.lspconfig"
 local notify = require "notify"
 
@@ -33,9 +30,9 @@ end
 -- Use an on_attach function to only map the following keys
 -- after the language server attaches to the current buffer
 local on_attach = function(client, bufnr)
-  if client.name == "tailwindcss" then
-    require("tailwindcss-colors").buf_attach(bufnr)
-  end
+  -- if client.name == "tailwindcss" then
+  --   require("tailwindcss-colors").buf_attach(bufnr)
+  -- end
 
   nvchad_lsp.on_attach(client, bufnr)
 
@@ -74,7 +71,7 @@ lspconfig.gopls.setup {
   },
 }
 
-lspconfig["typescript-tools"].setup {
+require("typescript-tools").setup {
   -- Needed for inlayHints. Merge this table with your settings or copy
   -- it from the source if you want to add your own init_options.
   --init_options = ts_utils.init_options,
@@ -86,6 +83,7 @@ lspconfig["typescript-tools"].setup {
   --   },
   -- },
   --
+  -- separate_diagnostic_server = false,
   capabilities = capabilities,
   settings = {
     expose_as_code_action = {
@@ -93,7 +91,7 @@ lspconfig["typescript-tools"].setup {
       "add_missing_imports",
     },
     complete_function_calls = true,
-    code_lens = "all",
+    -- code_lens = "all",
   },
   on_attach = function(client, bufnr)
     client.server_capabilities.document_formatting = false
@@ -178,7 +176,8 @@ local default_servers = {
   "eslint",
   "pyright",
   "jsonls",
-  "tailwindcss",
+  "ts_ls",
+  -- "tailwindcss",
   "sqlls",
   -- "angularls",
   "bashls",

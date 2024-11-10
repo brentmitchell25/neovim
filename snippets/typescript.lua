@@ -8,7 +8,7 @@ local d = ls.dynamic_node
 local t = ls.text_node
 local fmt = require("luasnip.extras.fmt").fmt
 local ts_utils = require "nvim-treesitter.ts_utils"
-local get_node_text = vim.treesitter.query.get_node_text
+local get_node_text = vim.treesitter.get_node_text
 
 local gwt_node
 gwt_node = function()
@@ -63,20 +63,38 @@ gwt_node = function()
           ]],
           { i(1, ""), c(2, { t "", d(1, gwt_node, {}) }) }
         ),
+        fmt(
+          [[
+            beforeEach(async {{
+                {}
+            }});
+          ]],
+          { i(1, "") }
+        ),
       })
     )
   end
   if txt:match "^describe%(['\"]given:" then
     return sn(
       nil,
-      fmt(
-        [[
+      c(1, {
+        fmt(
+          [[
           describe('when: {}', () => {{
             {}
           }});
         ]],
-        { i(1, ""), c(2, { t "", d(1, gwt_node, {}) }) }
-      )
+          { i(1, ""), c(2, { t "", d(1, gwt_node, {}) }) }
+        ),
+        fmt(
+          [[
+            beforeEach(async {{
+                {}
+            }});
+          ]],
+          { i(1, "") }
+        ),
+      })
     )
   end
   -- if txt has when or and in it, choice node between and: and then:

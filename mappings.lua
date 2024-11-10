@@ -8,7 +8,7 @@ M.markdown = {
 
 M.general = {
   i = {
-    ["jj"] = { "<Esc>", "escape to normal mode" },
+    ["jk"] = { "<Esc>", "escape to normal mode" },
   },
   n = {
     ["<C-h>"] = { ":TmuxNavigateLeft<CR>", "  move left" },
@@ -190,6 +190,65 @@ M.clipboard = {
   },
 }
 
+M.copilotchat = {
+  n = {
+    ["<leader>cct"] = {
+      ":CopilotChatToggle<CR>",
+      "CopilotChat - Toggle",
+    },
+    ["<leader>ccq"] = {
+      function()
+        local input = vim.fn.input "Quick Chat: "
+        if input ~= "" then
+          require("CopilotChat").ask(input, { selection = require("CopilotChat.select").buffer })
+        end
+      end,
+      "CopilotChat - Quick chat",
+    },
+    ["<leader>cch"] = {
+      function()
+        local actions = require "CopilotChat.actions"
+        require("CopilotChat.integrations.telescope").pick(actions.help_actions())
+      end,
+      "CopilotChat - Help actions",
+    },
+    -- Show prompts actions with telescope
+    ["<leader>ccp"] = {
+      function()
+        local actions = require "CopilotChat.actions"
+        require("CopilotChat.integrations.telescope").pick(actions.prompt_actions())
+      end,
+      "CopilotChat - Prompt actions",
+    },
+  },
+  v = {
+    ["<leader>ccq"] = {
+      function()
+        local input = vim.fn.input "Quick Chat: "
+        if input ~= "" then
+          require("CopilotChat").ask(input, { selection = require("CopilotChat.select").buffer })
+        end
+      end,
+      "CopilotChat - Quick chat",
+    },
+    ["<leader>cch"] = {
+      function()
+        local actions = require "CopilotChat.actions"
+        require("CopilotChat.integrations.telescope").pick(actions.help_actions())
+      end,
+      "CopilotChat - Help actions",
+    },
+    -- Show prompts actions with telescope
+    ["<leader>ccp"] = {
+      function()
+        local actions = require "CopilotChat.actions"
+        require("CopilotChat.integrations.telescope").pick(actions.prompt_actions())
+      end,
+      "CopilotChat - Prompt actions",
+    },
+  },
+}
+
 M.telescope = {
   n = {
     ["<C-P>"] = {
@@ -223,23 +282,33 @@ M.undotree = {
 M.trouble = {
   n = {
     ["<leader>xx"] = {
-      ":TroubleToggle<cr>",
-      "toggle trouble",
+      "<cmd>Trouble diagnostics toggle<cr>",
+      "Diagnostics (Trouble)",
       opts = { silent = true, noremap = true },
     },
-    ["<leader>xw"] = {
-      ":TroubleToggle workspace_diagnostics<cr>",
-      "trouble workspace diagnostics",
+    ["<leader>xX"] = {
+      "<cmd>Trouble diagnostics toggle filter.buf=0<cr>",
+      "Buffer Diagnostics (Trouble)",
       opts = { silent = true, noremap = true },
     },
-    ["<leader>xd"] = {
-      ":TroubleToggle document_diagnostics<cr>",
-      "trouble document diagnostics",
+    ["<leader>cs"] = {
+      "<cmd>Trouble symbols toggle focus=false<cr>",
+      "Symbols (Trouble)",
       opts = { silent = true, noremap = true },
     },
-    ["<leader>xl"] = {
-      ":TroubleToggle loclist<cr>",
-      "trouble location list",
+    ["<leader>cl"] = {
+      "<cmd>Trouble lsp toggle focus=false win.position=right<cr>",
+      "LSP Definitions / references / ... (Trouble)",
+      opts = { silent = true, noremap = true },
+    },
+    ["<leader>xL"] = {
+      "<cmd>Trouble loclist toggle<cr>",
+      "Location List (Trouble)",
+      opts = { silent = true, noremap = true },
+    },
+    ["<leader>xQ"] = {
+      "<cmd>Trouble qflist toggle<cr>",
+      "Quickfix List (Trouble)",
       opts = { silent = true, noremap = true },
     },
     ["gR"] = {
@@ -278,19 +347,19 @@ M.harpoon = {
       end,
       "harpoon 1",
     },
-    ["<M-r>"] = {
+    ["<M-s>"] = {
       function()
         require("harpoon"):list():select(2)
       end,
       "harpoon 2",
     },
-    ["<M-s>"] = {
+    ["<M-d>"] = {
       function()
         require("harpoon"):list():select(3)
       end,
       "harpoon 3",
     },
-    ["<M-t>"] = {
+    ["<M-f>"] = {
       function()
         require("harpoon"):list():select(4)
       end,
@@ -373,37 +442,59 @@ M.tmux = {
   v = {
     ["<leader>te"] = {
       function()
-        local function get_visual_selection()
-          -- Get the start and end position of the visual selection
-          local startPos = vim.fn.getpos "v"
-          local endPos = vim.fn.getpos "."
-
-          -- Calculate the range
-          local startLine, startCol = startPos[2], startPos[3]
-          local endLine, endCol = endPos[2], endPos[3]
-
-          -- Adjust the column index for block-wise selection to include the last character
-          if vim.fn.visualmode() == "\22" then -- "\22" is CTRL-V
-            endCol = endCol + 1
+        local function get_whole_lines(from, to)
+          local lines = {}
+          if from == to then
+            table.insert(lines, vim.api.nvim_buf_get_lines(0, from - 1, from, false)[1])
+          else
+            for i = from, to do
+              table.insert(lines, vim.api.nvim_buf_get_lines(0, i - 1, i, false)[1])
+            end
           end
-
-          -- Capture the text
-          local lines = vim.fn.getline(startLine, endLine)
-          if #lines == 0 then
-            return ""
-          end
-          lines[1] = string.sub(lines[1], startCol)
-          lines[#lines] = string.sub(lines[#lines], 1, endCol)
-
-          if type(lines) == "string" then
-            lines = { lines }
-          end
-
-          -- Return the table of lines as a string
           return table.concat(lines, "\n")
         end
 
-        local escaped_selection = get_visual_selection():gsub("'", "'\\''")
+        local function get_selected_text_realtime()
+          local start_pos = vim.fn.getpos "v"
+          local end_pos = vim.fn.getpos "."
+
+          -- We switch the start and end positions if the start is after the end line or character
+          -- This way we can always select from the top down and from left to right
+          if start_pos[2] > end_pos[2] or start_pos[3] > end_pos[3] then
+            start_pos, end_pos = end_pos, start_pos
+          end
+
+          if vim.api.nvim_get_mode().mode == "V" then
+            return get_whole_lines(start_pos[2], end_pos[2])
+          end
+
+          if start_pos[2] == end_pos[2] then
+            return vim
+              .api
+              -- .nvim_buf_get_lines(0, start_pos[2] - 1, start_pos[2], false)[1]
+              :sub(
+                start_pos[3],
+                end_pos[3] - 1
+              )
+          end
+
+          local selected_text = {}
+          for i = start_pos[2], end_pos[2] do
+            local line_text = vim.api.nvim_buf_get_lines(0, i - 1, i, false)[1]
+            if i == start_pos[2] then
+              line_text = line_text:sub(start_pos[3])
+            end
+            -- If select last line, there need to get column of current cursor
+            if i == end_pos[2] then
+              line_text = line_text:sub(1, end_pos[3] - 1)
+            end
+            table.insert(selected_text, line_text)
+          end
+
+          return table.concat(selected_text, "\n")
+        end
+
+        local escaped_selection = get_selected_text_realtime():gsub("'", "'\\''")
         escaped_selection = escaped_selection .. "\n" -- Add a newline to execute the command
         os.execute("tmux set-buffer '" .. escaped_selection .. "'")
         os.execute "tmux paste-buffer -d -t right"

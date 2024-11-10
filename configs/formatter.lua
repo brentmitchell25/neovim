@@ -6,7 +6,7 @@ M.setup = function()
       -- Formatter configurations for filetype "lua" go here
       -- and will be executed in order
       lua = {
-        require "formatter.filetypes.lua".stylua,
+        require("formatter.filetypes.lua").stylua,
       },
       toml = {
         require("formatter.filetypes.toml").taplo,
@@ -22,6 +22,10 @@ M.setup = function()
       },
       json = {
         require("formatter.filetypes.typescript").prettierd,
+      },
+      javascript = {
+        require("formatter.filetypes.typescript").prettierd,
+        require("formatter.filetypes.typescript").eslint_d,
       },
       typescript = {
         require("formatter.filetypes.typescript").prettierd,

@@ -18,6 +18,67 @@ return {
     end,
   },
   {
+    "CopilotC-Nvim/CopilotChat.nvim",
+    branch = "canary",
+    event = "BufEnter",
+    opts = {},
+    dependencies = {
+      { "zbirenbaum/copilot.lua" }, -- or github/copilot.vim
+      { "nvim-lua/plenary.nvim" }, -- for curl, log wrapper
+    },
+  },
+  {
+    "kawre/leetcode.nvim",
+    build = ":TSUpdate html",
+    lazy = "leetcode" ~= vim.fn.argv()[1],
+    dependencies = {
+      "nvim-telescope/telescope.nvim",
+      "nvim-lua/plenary.nvim", -- required by telescope
+      "MunifTanjim/nui.nvim",
+
+      -- optional
+      "nvim-treesitter/nvim-treesitter",
+      "rcarriga/nvim-notify",
+      "nvim-tree/nvim-web-devicons",
+    },
+    opts = {
+      -- configuration goes here
+      lang = "typescript",
+      arg = "leetcode",
+    },
+  },
+  {
+    "folke/noice.nvim",
+    event = "VeryLazy",
+    opts = {
+      -- add any options here
+      lsp = {
+        -- override markdown rendering so that **cmp** and other plugins use **Treesitter**
+        override = {
+          ["vim.lsp.util.convert_input_to_markdown_lines"] = true,
+          ["vim.lsp.util.stylize_markdown"] = true,
+          ["cmp.entry.get_documentation"] = true, -- requires hrsh7th/nvim-cmp
+        },
+      },
+      -- you can enable a preset for easier configuration
+      presets = {
+        bottom_search = true, -- use a classic bottom cmdline for search
+        command_palette = true, -- position the cmdline and popupmenu together
+        long_message_to_split = true, -- long messages will be sent to a split
+        inc_rename = false, -- enables an input dialog for inc-rename.nvim
+        lsp_doc_border = false, -- add a border to hover docs and signature help
+      },
+    },
+    dependencies = {
+      -- if you lazy-load any plugin below, make sure to add proper `module="..."` entries
+      "MunifTanjim/nui.nvim",
+      -- OPTIONAL:
+      --   `nvim-notify` is only needed, if you want to use the notification view.
+      --   If not available, we use `mini` as the fallback
+      "rcarriga/nvim-notify",
+    },
+  },
+  {
     "zbirenbaum/copilot-cmp",
     event = "InsertEnter",
     dependencies = {
@@ -27,6 +88,43 @@ return {
     config = function()
       require("copilot_cmp").setup()
     end,
+  },
+  {
+    "epwalsh/obsidian.nvim",
+    version = "*", -- recommended, use latest release instead of latest commit
+    lazy = true,
+    ft = "markdown",
+    -- keys = {
+    --   { "<leader>on", "<cmd>ObsidianNew<cr>", desc = "New Obsidian note", mode = "n" },
+    --   { "<leader>oo", "<cmd>ObsidianSearch<cr>", desc = "Search Obsidian notes", mode = "n" },
+    --   { "<leader>os", "<cmd>ObsidianQuickSwitch<cr>", desc = "Quick Switch", mode = "n" },
+    --   { "<leader>ob", "<cmd>ObsidianBacklinks<cr>", desc = "Show location list of backlinks", mode = "n" },
+    --   { "<leader>ot", "<cmd>ObsidianTemplate<cr>", desc = "Follow link under cursor", mode = "n" },
+    -- },
+    -- Replace the above line with this if you only want to load obsidian.nvim for markdown files in your vault:
+    -- event = {
+    --   -- If you want to use the home shortcut '~' here you need to call 'vim.fn.expand'.
+    --   -- E.g. "BufReadPre " .. vim.fn.expand "~" .. "/my-vault/**.md"
+    --   "BufReadPre path/to/my-vault/**.md",
+    --   "BufNewFile path/to/my-vault/**.md",
+    -- },
+    opts = {
+      workspaces = {
+        {
+          name = "personal",
+          path = "~/Documents/Obsidian Vault",
+        },
+        {
+          name = "work",
+          path = "~/OneDrive - kochind.com/Obsidian",
+        },
+      },
+
+      -- see below for full list of options 👇
+    },
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+    },
   },
   {
     "pmizio/typescript-tools.nvim",
@@ -65,9 +163,10 @@ return {
       code_font_family = "CaskaydiaCove Nerd Font",
       watermark_font_family = "Pacifico",
       watermark = "",
-      bg_theme = "default",
+      -- bg_theme = "default",
+      bg_color = "#535c68",
       breadcrumbs_separator = "/",
-      has_breadcrumbs = false,
+      has_breadcrumbs = true,
     },
   },
   {
@@ -183,9 +282,9 @@ return {
   },
   {
     "iamcco/markdown-preview.nvim",
-    build = "cd app && npm install",
-    event = "BufEnter",
-    config = function()
+    cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
+    build = "cd app && yarn install && git clean -df",
+    init = function()
       vim.g.mkdp_filetypes = { "markdown" }
     end,
     ft = { "markdown" },
@@ -202,23 +301,35 @@ return {
     end,
   },
   {
+    "stevearc/oil.nvim",
+    ---@module 'oil'
+    ---@type oil.setupopts
+    opts = {},
+    -- Optional dependencies
+    dependencies = { { "echasnovski/mini.icons", opts = {} } },
+    event = "BufEnter",
+    config = function()
+      print "here"
+      require("oil").setup()
+    end,
+  },
+  {
     "neovim/nvim-lspconfig",
     config = function()
       require "plugins.configs.lspconfig"
       require "custom.configs.lspconfig"
     end,
   },
-  {
-    "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
-    cmd = "TSCaptureUnderCursor",
-    event = "BufEnter",
-    config = function()
-      vim.diagnostic.config {
-        virtual_text = false,
-      }
-      require("lsp_lines").setup()
-    end,
-  },
+  -- {
+  --   "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
+  --   event = "BufEnter",
+  --   config = function()
+  --     vim.diagnostic.config {
+  --       virtual_text = false,
+  --     }
+  --     require("lsp_lines").setup()
+  --   end,
+  -- },
   -- {
   --   "nvim-treesitter/playground",
   --   cmd = "TSCaptureUnderCursor",
