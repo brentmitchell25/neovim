@@ -309,7 +309,6 @@ return {
     dependencies = { { "echasnovski/mini.icons", opts = {} } },
     event = "BufEnter",
     config = function()
-      print "here"
       require("oil").setup()
     end,
   },
