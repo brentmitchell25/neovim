@@ -19,7 +19,7 @@ return {
   },
   {
     "CopilotC-Nvim/CopilotChat.nvim",
-    branch = "canary",
+    branch = "main",
     event = "BufEnter",
     opts = {},
     dependencies = {

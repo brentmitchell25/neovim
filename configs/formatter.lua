@@ -20,6 +20,9 @@ M.setup = function()
       css = {
         require("formatter.filetypes.typescript").prettierd,
       },
+      terraform = {
+        require("formatter.filetypes.terraform").tofufmt,
+      },
       json = {
         require("formatter.filetypes.typescript").prettierd,
       },

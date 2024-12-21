@@ -171,12 +171,26 @@ lspconfig.elixirls.setup {
   },
 }
 
+require("lspconfig").terraformls.setup {
+  root_dir = lspconfig.util.root_pattern "*.tf",
+  on_attach = on_attach,
+  capabilities = capabilities,
+}
+
+-- require("tflint").terraformls.setup {
+--   root_dir = lspconfig.util.root_pattern "*.tf",
+--   on_attach = on_attach,
+--   capabilities = capabilities,
+-- }
+
 local default_servers = {
   "dockerls",
   "eslint",
   "pyright",
   "jsonls",
   "ts_ls",
+  -- "terraformls",
+  -- "tflint",
   -- "tailwindcss",
   "sqlls",
   -- "angularls",
